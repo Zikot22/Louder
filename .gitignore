@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/Backend/obj
+/Backend/.vs/Backend/FileContentIndex
+/Backend/appsettings.Development.json
+/Backend/Backend.csproj.user
