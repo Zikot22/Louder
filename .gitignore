@@ -1,0 +1,10 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Louder/v17
+/.vs/Louder/DesignTimeBuild
+/.vs/Louder/FileContentIndex
+/.vs/ProjectEvaluation
+/.vs
+/Backend/obj/Debug/net6.0
