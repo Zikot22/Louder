@@ -8,3 +8,7 @@
 /.vs/ProjectEvaluation
 /.vs
 /Backend/obj/Debug/net6.0
+/Backend/Dockerfile
+/Backend/appsettings.json
+/Backend/appsettings.Development.json
+/Backend/Properties/launchSettings.json
