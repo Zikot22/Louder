@@ -7,7 +7,8 @@
 /.vs/Louder/FileContentIndex
 /.vs/ProjectEvaluation
 /.vs
-/Backend/obj/Debug/net6.0
+/Backend/obj
+/Backend/bin
 /Backend/Dockerfile
 /Backend/appsettings.json
 /Backend/appsettings.Development.json
