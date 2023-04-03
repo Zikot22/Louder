@@ -13,3 +13,5 @@
 /Backend/appsettings.json
 /Backend/appsettings.Development.json
 /Backend/Properties/launchSettings.json
+/Backend/warmup.sem
+/Backend/Backend.csproj.user
