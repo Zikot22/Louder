@@ -15,3 +15,5 @@
 /Backend/Properties/launchSettings.json
 /Backend/warmup.sem
 /Backend/Backend.csproj.user
+/frontend/node_modules
+/frontend/.next
