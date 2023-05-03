@@ -19,7 +19,7 @@ namespace Backend.Models
         public string? Password { get; set; }
 
         [StringLength(41)]
-        public string? Aratar { get; set; }
+        public string? Avatar { get; set; }
 
         public bool AdminPermissions { get; set;}
     }
