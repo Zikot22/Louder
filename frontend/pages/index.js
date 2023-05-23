@@ -1,7 +1,7 @@
 const Index = () => 
 {
     return (
-        <div>
+        <div className="">
             <h1>hi im alive</h1>
         </div>
     );    
