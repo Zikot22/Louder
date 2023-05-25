@@ -3,7 +3,8 @@ import LogoIcon from "./icons/LogoIcon";
 
 const Header = () => {
     return (
-        <Navbar className="background-color-header">
+        <header> 
+        <Navbar>
             <Container>
                 <Navbar.Brand href="#home">
                     <LogoIcon/> Быстрые отчеты
@@ -18,6 +19,7 @@ const Header = () => {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+        </header>
     );
 }
  
