@@ -1,9 +1,9 @@
 import { Container, Row, Col} from "react-bootstrap";
-import { FaFacebook, FaTwitter, FaInstagram, FaVk, FaYoutube } from 'react-icons/fa';
+import { FaVk, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
     return (
-        <footer className="py-1 mt-3">
+        <footer className="py-1 my-2">
             <Container>
                 <Row>
                     <Col xs="8" md="6" className="d-flex justify-content-start align-items-center">

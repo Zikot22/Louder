@@ -1,0 +1,35 @@
+.information {
+    background-image: url('/fon.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 4rem 0;
+}
+
+.header_text {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.text {
+    font-size: 1.2rem;
+    color: white;
+}
+
+.link_text:hover {
+    color: blue;
+}
+
+@media (max-width: 575px) { /* Mobile devices */
+    .information {
+        padding: 2rem 0;
+    }
+
+    .header_text {
+        font-size: 1.5rem;
+    }
+
+    .text {
+        font-size: 1rem;
+    }
+}
