@@ -11,7 +11,9 @@ function MyApp({ Component, pageProps }) {
 
   return <>
   <Header/>
-  <Component {...pageProps}/>
+  <div className="background-color-primary">
+    <Component {...pageProps}/>
+  </div>
   <Footer/>
   </>
 }

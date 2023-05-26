@@ -3,7 +3,6 @@ import LogoIcon from "./icons/LogoIcon";
 
 const Header = () => {
     return (
-        <header> 
         <Navbar>
             <Container>
                 <Navbar.Brand href="#home">
@@ -19,7 +18,6 @@ const Header = () => {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-        </header>
     );
 }
  
