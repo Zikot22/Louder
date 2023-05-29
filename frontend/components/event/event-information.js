@@ -2,7 +2,7 @@ import { Container, Row, Col, Media } from 'react-bootstrap';
 
 const EventInformationComponent = () => {
   return (
-    <Container className='pt-3'>
+    <Container className='pt-3 mb-4'>
       <Row>
         <Col xs={12} md={6} lg={4} xl={4} xxl={3} className='mb-3 d-flex justify-content-center'>
         <img

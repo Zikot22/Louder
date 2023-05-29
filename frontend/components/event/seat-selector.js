@@ -19,7 +19,7 @@ const SeatSelectorComponent = ({ name, description, price }) => {
 
   return (
     <Container className='pb-3'>  
-        <h3>Купить билет</h3>
+        <h3 className='mb-3'>Купить билет</h3>
         <Card>
         <Card.Body>
             <div className="d-flex align-items-center justify-content-between mb-3">
