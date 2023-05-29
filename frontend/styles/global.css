@@ -22,3 +22,7 @@ p, a
 {
     background-color: #DD4433;    
 }
+
+.no-ws {
+    min-height: calc(100vh - 112px);
+}

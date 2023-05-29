@@ -14,7 +14,7 @@ const Header = () => {
         <>
         <Navbar>
             <Container>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/">
                     <LogoIcon/> Быстрые отчеты
                     &nbsp; &nbsp;
                     <LogoIcon/><Button variant="link" className="text-decoration-none px-0"><p className="m-0">Москва</p></Button>
