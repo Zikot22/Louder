@@ -10,7 +10,7 @@ const EventsFilter = () => {
                     <Col lg="2" xs="12" className={styles.search_col}>
                         <input className="w-100" type="text" placeholder="Search"/>
                     </Col>
-                    <Col lg="1" xs="3" className={styles.filter_col}>
+                    <Col lg="1" xs="4" className={styles.filter_col}>
                         <Dropdown>
                         <Dropdown.Toggle className={styles.dropdown}>Тип</Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -20,7 +20,7 @@ const EventsFilter = () => {
                         </Dropdown.Menu>
                         </Dropdown>
                     </Col>
-                    <Col lg="1" xs="3" className={styles.filter_col}>
+                    <Col lg="1" xs="4" className={styles.filter_col}>
                         <Dropdown>
                         <Dropdown.Toggle className={styles.dropdown}>Цена</Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -30,7 +30,7 @@ const EventsFilter = () => {
                         </Dropdown.Menu>
                         </Dropdown>
                     </Col>
-                    <Col lg="1" xs="3" className={styles.filter_col}>
+                    <Col lg="1" xs="4" className={styles.filter_col}>
                         <Dropdown>
                         <Dropdown.Toggle className={styles.dropdown}>Дата</Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -39,9 +39,6 @@ const EventsFilter = () => {
                             <Dropdown.Item>Option 3</Dropdown.Item>
                         </Dropdown.Menu>
                         </Dropdown>
-                    </Col>
-                    <Col lg="1" xs="3" className={styles.filter_col}>
-                        <Button color="primary" type="submit" className="w-75">Поиск</Button>
                     </Col>
                 </Row>
             </Col>

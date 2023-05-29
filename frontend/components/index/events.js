@@ -57,9 +57,9 @@ const cardsData = [
 const Events = () => {
   return (
     <Container className="d-flex justify-content-center mt-3">
-      <Row className="justify-content-between">
+      <Row>
         {cardsData.map((card, index) => (
-          <Col xs="6" sm="4" md="3" lg="2" key={index} className="d-flex align-items-stretch mb-3">
+          <Col xs="6" sm="4" md="4" lg="3" xl="3" key={index} className="d-flex align-items-stretch mb-3">
             <Link href="/1" className={styles.link}>
               <Card>
                 <Card.Img variation="top" width="100%" src={card.image} alt={card.name} className="img-fluid"/>
