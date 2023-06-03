@@ -1,40 +1,55 @@
-import { Card, Container, Col } from 'react-bootstrap';
+import { Card, Container, Col, Button, Link } from 'react-bootstrap';
 import { FaPencilAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import packageInfo from "../../package.json";
 
-const UserProfileComponent = ({ name, avatarSrc, onAvatarUpload, onEdit }) => {
-  const handleAvatarUpload = (event) => {
+const UserProfileComponent = ({ onEdit }) => {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+
+  const domain = packageInfo.domain;
+
+  useEffect(() => {
+    setUsername(localStorage.getItem('username'));
+  })
+
+  const handleAvatarUpload = async (event) => {
     const file = event.target.files[0];
-    if (file && file.type === 'image/jpeg') {
-      // Perform the avatar upload logic here
-      // This function will be triggered when a valid JPG file is selected for upload
-      // You can use it to handle the file upload, display a preview, or make an API request
-      
-      // Example: Displaying a preview of the selected avatar image
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const uploadedImageSrc = e.target.result;
-        // Invoke the onAvatarUpload function passing the uploadedImageSrc
-        onAvatarUpload(uploadedImageSrc);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      // Handle the case when the selected file is not a JPG file
-      // You can display an error message or perform any other desired action
-      console.log('Please select a valid JPG file.');
-    }
+    const formData = new FormData();
+    formData.append('avatar', file);
+    const response = await fetch(domain + '/User/avatar', {
+      method: 'POST',
+      headers: { Authorization: "Bearer " + localStorage.getItem('token') },
+      body: formData,
+    })
+    if(response.ok) router.reload();
   };
+
+  const handleLogout = () => 
+    {
+      localStorage.removeItem('token');
+      router.push('/');
+    }
+
+  useEffect(() => {
+    var img = document.getElementById("profile-avatar");
+    if (img) {
+        img.srcset = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
+        img.src = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
+    }
+  })
 
   return (
     <Container className="d-flex justify-content-center">
-        <Col md="4" lg="3" className="d-flex justify-content-center m-0">
             <Card className='background-color-primary border-0'>
                 <Card.Img
-                top
-                src={avatarSrc}
-                alt="Avatar"
+                id = "profile-avatar"
                 className="rounded-circle"
-                style={{ width: '200px', height: '200px' }}
+                style={{ width: '200px', height: '200px', cursor: 'pointer' }}
                 onClick={() => document.getElementById('avatar-input').click()}
+                onError={({ currentTarget }) =>
+                                 { currentTarget.onerror = null; currentTarget.src="no_avatar.jpg"; currentTarget.srcset="no_avatar.jpg" }}
                 />
                 <input
                 id="avatar-input"
@@ -43,11 +58,15 @@ const UserProfileComponent = ({ name, avatarSrc, onAvatarUpload, onEdit }) => {
                 style={{ display: 'none' }}
                 onChange={handleAvatarUpload}
                 />
-                <Card.Body className="d-flex align-items-center">
-                    <Card.Title tag="h3" className="mr-3">{name} <FaPencilAlt className="pb-1" onClick={onEdit} style={{ cursor: 'pointer' }}/></Card.Title> 
+                <Card.Body>
+                    <Card.Title tag="h3" className="d-flex align-items-center justify-content-center">{ username }<FaPencilAlt className="pt-1" onClick={onEdit} style={{ cursor: 'pointer' }}/></Card.Title>
+                    <Card.Text className="d-flex align-items-center justify-content-center">
+                      <Button onClick={handleLogout} variant="danger">
+                          Выйти
+                      </Button>
+                    </Card.Text>
                 </Card.Body>
             </Card>
-        </Col>
     </Container>
   );
 };

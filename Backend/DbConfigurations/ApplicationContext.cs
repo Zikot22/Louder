@@ -11,12 +11,13 @@ namespace Backend.DbConfigurations
         public ApplicationContext(IConfiguration configuration)
         {
             Configuration = configuration;
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(Configuration.GetConnectionString("Louder"),
+            var a = Configuration.GetConnectionString("Louder");
+            optionsBuilder.UseMySql(a,
                 new MySqlServerVersion(new Version(8, 0, 32)));
         }
     }
