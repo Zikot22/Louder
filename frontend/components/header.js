@@ -1,14 +1,26 @@
 import { Container, Button, Navbar, Modal} from "react-bootstrap";
 import LogoIcon from "./icons/LogoIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginRegistrationForm from "./authorization";
+import { FaSignInAlt } from 'react-icons/fa';
+import packageInfo from "../package.json";
 
-const Header = () => {
+const Header = ( {isLoggedIn} ) => {
 
     const [modalOpen, setModal] = useState(false);
 
     const showModal = () => setModal(true);
     const closeModal = () => setModal(false);
+
+    const domain = packageInfo.domain;
+
+    useEffect(() => {
+        var img = document.getElementById("header-avatar");
+        if (img) {
+            img.srcset = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
+            img.src = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
+        }
+    })
 
     return (
         <>
@@ -21,15 +33,25 @@ const Header = () => {
                     </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        <a href="#" onClick={showModal}><LogoIcon/></a>
+                    <Navbar.Text className="py-0">
+                        { 
+                            isLoggedIn
+                            ? <a href="account" className="pe-2">
+                                <img id="header-avatar" className="rounded-circle" style={{ width: '40px', height: '40px' }} 
+                                onError={({ currentTarget }) =>
+                                 { currentTarget.onerror = null; currentTarget.src="no_avatar.jpg"; currentTarget.srcset="no_avatar.jpg"}}/>
+                            </a> 
+                            : <a href="#" className="pe-2" onClick={showModal}>
+                                <FaSignInAlt size={28}/>
+                            </a> 
+                        }
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
         <Modal show={modalOpen} size="sm" onHide={closeModal}>
             <Modal.Body className="p-0">
-                <LoginRegistrationForm/>
+                <LoginRegistrationForm onClose={closeModal}/>
             </Modal.Body>
         </Modal>
         </>
