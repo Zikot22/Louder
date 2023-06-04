@@ -32,7 +32,7 @@ const LoginRegistrationForm = ({onClose})  => {
     e.preventDefault();
 
     try {
-      const response = await fetch(domain + '/User/login', {  
+      const response = await fetch(`${domain}/User/login`, {  
         method: 'POST',
         headers: {  
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const LoginRegistrationForm = ({onClose})  => {
 
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await fetch(domain + '/User/register', {  
+        const response = await fetch(`${domain}/User/register`, {  
           method: 'PUT',
           headers: {  
             'Content-Type': 'application/json',

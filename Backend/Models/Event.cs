@@ -25,8 +25,5 @@ namespace Backend.Models
 
         [Required]
         public int Amount { get; set; }
-
-        [Required, StringLength(41)]
-        public string? Cover { get; set; }
     }
 }

@@ -6,7 +6,7 @@ const Account = () =>
 {
     return (
         <div className="pb-2 pt-4">
-            <UserProfileComponent avatarSrc="ava.jpg"  name="Михаил Михаил"/>
+            <UserProfileComponent/>
             <TicketsFilter/>    
             <Tickets/>
         </div>
