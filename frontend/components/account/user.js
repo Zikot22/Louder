@@ -18,7 +18,7 @@ const UserProfileComponent = ({ onEdit }) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('avatar', file);
-    const response = await fetch(domain + '/User/avatar', {
+    const response = await fetch(`${domain}/User/avatar`, {
       method: 'POST',
       headers: { Authorization: "Bearer " + localStorage.getItem('token') },
       body: formData,
@@ -35,8 +35,8 @@ const UserProfileComponent = ({ onEdit }) => {
   useEffect(() => {
     var img = document.getElementById("profile-avatar");
     if (img) {
-        img.srcset = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
-        img.src = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
+        img.srcset = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
+        img.src = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
     }
   })
 
@@ -49,7 +49,7 @@ const UserProfileComponent = ({ onEdit }) => {
                 style={{ width: '200px', height: '200px', cursor: 'pointer' }}
                 onClick={() => document.getElementById('avatar-input').click()}
                 onError={({ currentTarget }) =>
-                                 { currentTarget.onerror = null; currentTarget.src="no_avatar.jpg"; currentTarget.srcset="no_avatar.jpg" }}
+                  { currentTarget.onerror = null; currentTarget.src="no_avatar.jpg"; currentTarget.srcset="no_avatar.jpg" }}
                 />
                 <input
                 id="avatar-input"

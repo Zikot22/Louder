@@ -20,5 +20,5 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0"
   },
-  "domain": "https://localhost:56928"
+  "domain": "http://localhost:56929"
 }

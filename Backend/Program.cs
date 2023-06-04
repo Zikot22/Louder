@@ -30,6 +30,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationContext>();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<EventRepository>();
 
 builder.Services.AddMvc(options =>
 {
@@ -41,10 +42,10 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-                      builder =>
-                      {
-                          builder.WithOrigins("http://localhost:3000").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
-                      });
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+        });
 });
 
 var app = builder.Build();
@@ -55,7 +56,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();

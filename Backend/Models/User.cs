@@ -18,9 +18,6 @@ namespace Backend.Models
         [Required, StringLength(16)]
         public string? Password { get; set; }
 
-        [StringLength(41)]
-        public string? Avatar { get; set; }
-
         public bool AdminPermissions { get; set;}
     }
 }

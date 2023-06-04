@@ -42,7 +42,7 @@ namespace Backend.Controllers
             return BadRequest("Invalid avatar file.");
         }
 
-        [HttpGet("All")]
+        [HttpGet("all")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
@@ -84,7 +84,7 @@ namespace Backend.Controllers
             return NoContent();
         }
         
-        [HttpPost("id")]
+        [HttpPost("{id}")]
         [ProducesResponseType(204)]
         public async Task<ActionResult> UpdateUser(int id, User user)
         {

@@ -52,10 +52,6 @@ namespace Backend.Repositories
             {
                 user.Name = userUpdate.Name;
             }
-            if (!string.IsNullOrWhiteSpace(userUpdate.Avatar))
-            {
-                user.Avatar = userUpdate.Avatar;
-            }
 
             user.AdminPermissions = userUpdate.AdminPermissions;
 

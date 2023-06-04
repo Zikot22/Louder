@@ -6,6 +6,7 @@ namespace Backend.DbConfigurations
     public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Event> Events { get; set; } = null!;
         private readonly IConfiguration Configuration;
 
         public ApplicationContext(IConfiguration configuration)

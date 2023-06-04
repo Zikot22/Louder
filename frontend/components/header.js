@@ -2,13 +2,14 @@ import { Container, Button, Navbar, Modal} from "react-bootstrap";
 import LogoIcon from "./icons/LogoIcon";
 import { useEffect, useState } from "react";
 import LoginRegistrationForm from "./authorization";
+import { useRouter } from 'next/router';
 import { FaSignInAlt } from 'react-icons/fa';
 import packageInfo from "../package.json";
 
 const Header = ( {isLoggedIn} ) => {
 
     const [modalOpen, setModal] = useState(false);
-
+    const router = useRouter();
     const showModal = () => setModal(true);
     const closeModal = () => setModal(false);
 
@@ -17,8 +18,8 @@ const Header = ( {isLoggedIn} ) => {
     useEffect(() => {
         var img = document.getElementById("header-avatar");
         if (img) {
-            img.srcset = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
-            img.src = domain + "/images/avatars/" + localStorage.getItem('userId') + ".jpg";
+            img.srcset = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
+        img.src = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
         }
     })
 
@@ -36,7 +37,7 @@ const Header = ( {isLoggedIn} ) => {
                     <Navbar.Text className="py-0">
                         { 
                             isLoggedIn
-                            ? <a href="account" className="pe-2">
+                            ? <a onClick={() => {router.push('/account')}} className="pe-2">
                                 <img id="header-avatar" className="rounded-circle" style={{ width: '40px', height: '40px' }} 
                                 onError={({ currentTarget }) =>
                                  { currentTarget.onerror = null; currentTarget.src="no_avatar.jpg"; currentTarget.srcset="no_avatar.jpg"}}/>
