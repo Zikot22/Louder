@@ -1,5 +1,6 @@
 ﻿using Backend.DbConfigurations;
 using Backend.Models;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories
@@ -90,6 +91,22 @@ namespace Backend.Repositories
             {
                 updatingEvent.Amount = eventUpdate.Amount;
             }
+            context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Ticket>> GetTickets(int id) 
+        {
+            return await context.Tickets.Where(t => t.EventId == id).ToListAsync();
+        }
+
+        public async Task DecreaseAmount(int id, int amount) 
+        {
+            var updatingEvent = await context.Events.FirstAsync(e => e.Id == id);
+            if(updatingEvent.Amount < amount) 
+            {
+                throw new Exception("Билеты на мероприятие кончились!");
+            }
+            updatingEvent.Amount -= amount;
             context.SaveChanges();
         }
     }

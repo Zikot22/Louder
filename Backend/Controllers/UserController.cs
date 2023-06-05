@@ -53,7 +53,7 @@ namespace Backend.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser([FromRoute] int id)
         {
             var currentUser = GetCurrentUser();
             if (currentUser == null) 
@@ -70,7 +70,7 @@ namespace Backend.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {
             await rep.DeleteUser(id);
             return NoContent();
@@ -86,7 +86,7 @@ namespace Backend.Controllers
         
         [HttpPost("{id}")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> UpdateUser(int id, User user)
+        public async Task<ActionResult> UpdateUser([FromRoute] int id, User user)
         {
             await rep.UpdateUser(id, user);
             return NoContent();

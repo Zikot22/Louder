@@ -31,6 +31,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationContext>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EventRepository>();
+builder.Services.AddScoped<TicketRepository>();
 
 builder.Services.AddMvc(options =>
 {

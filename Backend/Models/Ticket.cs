@@ -8,10 +8,12 @@ namespace Backend.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
         public Event? Event { get; set; }
 
-        [Required, MaxLength(10)]
+        [Required]
+        public int EventId { get; set; }
+
+        [Required]
         public float Price { get; set; }
 
         [Required, StringLength(20)]
