@@ -5,13 +5,31 @@ import packageInfo from "../../package.json";
 
 const domain = packageInfo.domain;
 
-const Event = ({event}) => 
+const Event = ({ event, tickets }) => 
 {
-    const {query} = useRouter()
+    const router = useRouter();
+
+    const onBuy = async (quantity) =>
+    {
+        try
+        {
+            await fetch(`${domain}/Event/${event.id}/amount/decrease?amount=${quantity}`, {  
+                method: 'POST',
+                headers: {  
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            router.push('/account');
+    
+        }
+        catch {}
+    }
+
     return (
         <div>
             <EventInformationComponent event={event}/>
-            <SeatSelectorComponent name={"Стандарт"} price={1200} description={"Комфортные мягкие сидения и вкусное печенье"}/>
+            <SeatSelectorComponent onBuy={onBuy} tickets={tickets}/>
         </div>
     );    
 };
@@ -19,9 +37,12 @@ const Event = ({event}) =>
 export default Event;
 
 export async function getServerSideProps({params}) {
-    const response = await fetch(`${domain}/Event/${params.id}`,)
-    const event = await response.json()
+    const eventResponse = await fetch(`${domain}/Event/${params.id}`,)
+    const event = await eventResponse.json()
+
+    const ticketsResponse = await fetch(`${domain}/Event/${event.id}/tickets`,)
+    const tickets = await ticketsResponse.json()
     return {
-        props: {event},
+        props: {event, tickets},
     }
 }

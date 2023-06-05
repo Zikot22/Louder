@@ -7,6 +7,8 @@ namespace Backend.DbConfigurations
     {
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Event> Events { get; set; } = null!;
+        public DbSet<Ticket> Tickets { get; set; } = null!;
+
         private readonly IConfiguration Configuration;
 
         public ApplicationContext(IConfiguration configuration)

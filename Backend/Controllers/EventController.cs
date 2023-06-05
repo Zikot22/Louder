@@ -19,7 +19,7 @@ namespace Backend.Controllers
         [HttpPost("{id}/cover")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult> UpdateEventCover(int id, IFormFile cover)
+        public async Task<ActionResult> UpdateEventCover([FromRoute] int id, IFormFile cover)
         {
             var editingEvent = await rep.GetEvent(id);
             if (editingEvent == null)
@@ -53,7 +53,7 @@ namespace Backend.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<Event>> GetEvent(int id)
+        public async Task<ActionResult<Event>> GetEvent([FromRoute] int id)
         {
             var result = await rep.GetEvent(id);
             return Ok(result);
@@ -61,7 +61,7 @@ namespace Backend.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> DeleteEvent(int id)
+        public async Task<ActionResult> DeleteEvent([FromRoute] int id)
         {
             await rep.DeleteEvent(id);
             return NoContent();
@@ -77,9 +77,33 @@ namespace Backend.Controllers
 
         [HttpPost("{id}")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> UpdateEvent(int id, Event eventUpdate)
+        public async Task<ActionResult> UpdateEvent([FromRoute] int id, Event eventUpdate)
         {
             await rep.UpdateEvent(id, eventUpdate);
+            return NoContent();
+        }
+
+        [HttpGet("{id}/tickets")]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets([FromRoute] int id) 
+        {
+            return Ok(await rep.GetTickets(id));
+        }
+        
+        [HttpPost("{id}/amount/decrease")]
+        [ProducesResponseType(204)]
+        public async Task<ActionResult<IEnumerable<Ticket>>> DecreaseAmount([FromRoute] int id) 
+        {
+            int.TryParse(Request.Query.FirstOrDefault(p => p.Key == "amount").Value!, out var amount);
+            if (amount <= 0) amount = 1;
+            try 
+            {
+                await rep.DecreaseAmount(id, amount);
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
             return NoContent();
         }
     }
