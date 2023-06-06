@@ -17,6 +17,7 @@ const Index = ({ events,  urlSearchPattern, urlPrice, urlDate, urlAmount  }) =>
 
     const router = useRouter();
     useEffect(() => {
+        console.log(urlSearchPattern);
         const queryParams = new URLSearchParams();
         queryParams.append('searchpattern', searchPattern);
         queryParams.append('price', price);
@@ -24,7 +25,7 @@ const Index = ({ events,  urlSearchPattern, urlPrice, urlDate, urlAmount  }) =>
         queryParams.append('amount', amount);
         
         const query = queryParams.toString();
-        router.push({ pathname: '/', query });
+        router.push({ pathname: '/', query }, undefined);
       }, [searchPattern, price, date, amount]);
 
     return (
@@ -44,14 +45,13 @@ export async function getServerSideProps({query}) {
     const responce = await fetch(`${domain}/Event/filter?searchPattern=${searchpattern || ''}
         &price=${price || ''}&date=${date || ''}&amount=${amount || ''}`);
     const events = await responce.json();
-   
     return { 
         props: {
             events,
-            searchpattern: searchpattern || '',
-            price: price || '',
-            date: date || '',
-            amount: amount || '',
+            urlSearchPattern: searchpattern || '',
+            urlPrice: price || '',
+            urlDate: date || '',
+            urlAmount: amount || '',
           },
     };
 };

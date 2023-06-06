@@ -99,9 +99,11 @@ namespace Backend.Repositories
             return await context.Tickets.Where(t => t.EventId == id).ToListAsync();
         }
 
-        public async Task DecreaseAmount(int id, int amount) 
+        public async Task DecreaseAmount(int ticketId, int amount) 
         {
-            var updatingEvent = await context.Events.FirstAsync(e => e.Id == id);
+            if (amount <= 0) throw new Exception("Некорректное количество билетов");
+            var updatingEvent = (await context.Tickets.Include(t => t.Event).FirstAsync(t => t.Id == ticketId)).Event;
+            if (updatingEvent == null) throw new Exception("Мероприятие не найдено");
             if(updatingEvent.Amount < amount) 
             {
                 throw new Exception("Билеты на мероприятие кончились!");

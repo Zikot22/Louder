@@ -2,32 +2,54 @@ import EventInformationComponent from "../../components/event/event-information"
 import SeatSelectorComponent from "../../components/event/seat-selector";
 import { useRouter } from 'next/router';
 import packageInfo from "../../package.json";
+import ErrorMessage from "../../components/error";
+import { getCookie } from "cookies-next";
+import { useState } from "react";
 
 const domain = packageInfo.domain;
 
 const Event = ({ event, tickets }) => 
 {
     const router = useRouter();
+    const [error, setError] = useState(null);
 
-    const onBuy = async (quantity) =>
+    const handleCloseError = () => {
+        setError('');
+    };
+
+    const onBuy = async (purchases) =>
     {
-        try
+        if(getCookie('token') != null)
         {
-            await fetch(`${domain}/Event/${event.id}/amount/decrease?amount=${quantity}`, {  
-                method: 'POST',
-                headers: {  
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            router.push('/account');
-    
+            try
+            {
+                const userId = getCookie('userId');
+                purchases = purchases.map(ticketId => ({ ...ticketId, userId: userId }));
+                await fetch(`${domain}/Purchase`, {  
+                    method: 'POST',
+                    headers: {  
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(purchases)
+                });
+                
+                router.push('/account');
+                
+            }
+            catch (ex)
+            {
+                setError(ex);            
+            }
         }
-        catch {}
+        else
+        {
+            setError('Авторизуйтесь для покупки');
+        }
     }
 
     return (
         <div>
+            {error && <ErrorMessage error={error} onClose={handleCloseError}/>}
             <EventInformationComponent event={event}/>
             <SeatSelectorComponent onBuy={onBuy} tickets={tickets}/>
         </div>

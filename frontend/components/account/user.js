@@ -3,6 +3,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 import packageInfo from "../../package.json";
+import { getCookie, deleteCookie } from 'cookies-next';
 
 const UserProfileComponent = ({ onEdit }) => {
   const router = useRouter();
@@ -11,7 +12,7 @@ const UserProfileComponent = ({ onEdit }) => {
   const domain = packageInfo.domain;
 
   useEffect(() => {
-    setUsername(localStorage.getItem('username'));
+    setUsername(getCookie('username') || 'no user');
   })
 
   const handleAvatarUpload = async (event) => {
@@ -20,23 +21,28 @@ const UserProfileComponent = ({ onEdit }) => {
     formData.append('avatar', file);
     const response = await fetch(`${domain}/User/avatar`, {
       method: 'POST',
-      headers: { Authorization: "Bearer " + localStorage.getItem('token') },
-      body: formData,
+      headers: {
+        'Authorization': 'Bearer ' + getCookie('token'),
+      },
+      body: formData
     })
     if(response.ok) router.reload();
   };
 
   const handleLogout = () => 
     {
-      localStorage.removeItem('token');
+      deleteCookie('token');
+      deleteCookie('username');
+      deleteCookie('userId');
       router.push('/');
     }
 
   useEffect(() => {
     var img = document.getElementById("profile-avatar");
+    var userId = getCookie('userId') || null;
     if (img) {
-        img.srcset = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
-        img.src = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
+        img.srcset = `${domain}/images/avatars/${userId}.jpg`;
+        img.src = `${domain}/images/avatars/${userId}.jpg`;
     }
   })
 

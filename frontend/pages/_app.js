@@ -4,27 +4,26 @@ import { useEffect, useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import jwt_decode from "jwt-decode";
+import { getCookie, deleteCookie } from 'cookies-next';
 
 function MyApp({ Component, pageProps }) {
   const [jwt, setJWT] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setJWT(localStorage.getItem('token'));
+    setJWT(getCookie('token'));
   })
 
   useEffect(() => {
     if(jwt) {
       const decodedToken = jwt_decode(jwt);
       if(decodedToken.exp >= Date.now()) {
-        localStorage.setItem('token');
-        localStorage.setItem('userId')
-        localStorage.setItem('username')
+        deleteCookie('token');
+        deleteCookie('userId')
+        deleteCookie('username')
         setIsLoggedIn(false);
       }
       else{
-        localStorage.setItem('userId', decodedToken.Id);
-        localStorage.setItem('username', decodedToken.Name);
         setIsLoggedIn(true);
       }
     }

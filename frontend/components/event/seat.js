@@ -2,20 +2,33 @@ import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const SeatComponent = ({ ticket, setPrice, setTotalQuantity }) => {
-
+const SeatComponent = ({ ticket, onSelectTicket, setPrice }) => {
+    // setPrice, setTotalQuantity
     const [quantity, setQuantity] = useState(0);
 
+    // const handleIncrease = () => {
+    //     setQuantity(quantity + 1);
+    //     setTotalQuantity(1)
+    //     setPrice(ticket.price);
+    // };
+
+    // const handleDecrease = () => {
+    //     if (quantity > 0) {
+    //         setQuantity(quantity - 1);
+    //         setTotalQuantity(-1);
+    //         setPrice(-ticket.price);
+    //     }
+    // };
     const handleIncrease = () => {
-        setQuantity(quantity + 1);
-        setTotalQuantity(1)
+        setQuantity((prevQuantity) => prevQuantity + 1);
+        onSelectTicket(ticket.id, quantity + 1);
         setPrice(ticket.price);
     };
 
     const handleDecrease = () => {
         if (quantity > 0) {
-            setQuantity(quantity - 1);
-            setTotalQuantity(-1);
+            setQuantity((prevQuantity) => prevQuantity - 1);
+            onSelectTicket(ticket.id, quantity - 1);
             setPrice(-ticket.price);
         }
     };
