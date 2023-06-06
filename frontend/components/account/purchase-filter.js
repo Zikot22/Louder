@@ -1,6 +1,14 @@
 import { Container, Row, Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
-const TicketsFilter = () => {
+const PurchasesFilter = ({setSearchPattern, searchPattern}) => {
+    const [inputSearch, setInputSearch] = useState(searchPattern);
+
+    useEffect(() => {
+        setSearchPattern(inputSearch);
+    }, [inputSearch])
+
+
   return (
     <div className="bg-white">
         <Container className="pt-2">
@@ -10,7 +18,7 @@ const TicketsFilter = () => {
                         <h3>Купленные билеты</h3>
                     </Col>
                     <Col lg="2" xxl="2" xl="2" md="3" sm="4" xs="5" className="d-flex align-items-center mb-2 me-3 p-0">
-                        <input className="w-100" type="text" placeholder="Search"/>
+                        <input className="w-100" type="text" placeholder="Search" value={inputSearch} onChange={e => setInputSearch(e.target.value)}/>
                     </Col>
                 </Row>
             </Col>
@@ -19,4 +27,4 @@ const TicketsFilter = () => {
   );
 }
 
-export default TicketsFilter;
+export default PurchasesFilter;

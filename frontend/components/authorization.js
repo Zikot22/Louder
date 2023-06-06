@@ -3,6 +3,8 @@ import { Container, Tabs, Tab, Form, Button, Alert, TabPane } from "react-bootst
 import styles from "../styles/components/authorization.module.css";
 import { useRouter } from 'next/router';
 import packageInfo from "../package.json";
+import { setCookie } from 'cookies-next';
+import jwt_decode from "jwt-decode";
 
 const LoginRegistrationForm = ({onClose})  => {
   const router = useRouter();
@@ -42,7 +44,11 @@ const LoginRegistrationForm = ({onClose})  => {
 
       if (response.ok) {
         const token = await response.json();
-        localStorage.setItem('token', token);
+        const decodedToken = jwt_decode(token);
+        
+        setCookie('token', token, { maxAge: 60 * 60 * 24 * 7 * 2})
+        setCookie('userId', decodedToken.Id, { maxAge: 60 * 60 * 24 * 7 * 2});
+        setCookie('username', decodedToken.Name, { maxAge: 60 * 60 * 24 * 7 * 2});
         
         router.push('/account');
         onClose(); } 
@@ -88,7 +94,12 @@ const LoginRegistrationForm = ({onClose})  => {
   
         if (response.ok) {
           const token = await response.json();
-          localStorage.setItem('token', token);
+          const decodedToken = jwt_decode(token);
+
+          setCookie('token', token, { maxAge: 60 * 60 * 24 * 7 * 2})
+          setCookie('userId', decodedToken.Id, { maxAge: 60 * 60 * 24 * 7 * 2});
+          setCookie('username', decodedToken.Name, { maxAge: 60 * 60 * 24 * 7 * 2});
+
           router.push('/account');
           onClose(); 
         } 

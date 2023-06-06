@@ -90,21 +90,21 @@ namespace Backend.Controllers
             return Ok(await rep.GetTickets(id));
         }
         
-        [HttpPost("{id}/amount/decrease")]
-        [ProducesResponseType(204)]
-        public async Task<ActionResult<IEnumerable<Ticket>>> DecreaseAmount([FromRoute] int id) 
-        {
-            int.TryParse(Request.Query.FirstOrDefault(p => p.Key == "amount").Value!, out var amount);
-            if (amount <= 0) amount = 1;
-            try 
-            {
-                await rep.DecreaseAmount(id, amount);
-            }
-            catch(Exception ex) 
-            {
-                return BadRequest(ex.Message);
-            }
-            return NoContent();
-        }
+        //[HttpPost("{id}/amount/decrease")]
+        //[ProducesResponseType(204)]
+        //public async Task<ActionResult<IEnumerable<Ticket>>> DecreaseAmount([FromRoute] int id) 
+        //{
+        //    int.TryParse(Request.Query.FirstOrDefault(p => p.Key == "amount").Value!, out var amount);
+        //    if (amount <= 0) amount = 1;
+        //    try 
+        //    {
+        //        await rep.DecreaseAmount(id, amount);
+        //    }
+        //    catch(Exception ex) 
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    return NoContent();
+        //}
     }
 }

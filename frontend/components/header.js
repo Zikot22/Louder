@@ -5,6 +5,7 @@ import LoginRegistrationForm from "./authorization";
 import { useRouter } from 'next/router';
 import { FaSignInAlt } from 'react-icons/fa';
 import packageInfo from "../package.json";
+import { getCookie } from 'cookies-next';
 
 const Header = ( {isLoggedIn} ) => {
 
@@ -17,9 +18,10 @@ const Header = ( {isLoggedIn} ) => {
 
     useEffect(() => {
         var img = document.getElementById("header-avatar");
+        var userId = getCookie('userId')
         if (img) {
-            img.srcset = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
-        img.src = `${domain}/images/avatars/${localStorage.getItem('userId')}.jpg`;
+            img.srcset = `${domain}/images/avatars/${userId}.jpg`;
+        img.src = `${domain}/images/avatars/${userId}.jpg`;
         }
     })
 
@@ -34,15 +36,15 @@ const Header = ( {isLoggedIn} ) => {
                     </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text className="py-0">
+                    <Navbar.Text style={{cursor: 'pointer'}} className="py-0">
                         { 
                             isLoggedIn
-                            ? <a onClick={() => {router.push('/account')}} className="pe-2">
+                            ? <a onClick={() => {router.push('/account')}} className="pe-2 pointer">
                                 <img id="header-avatar" className="rounded-circle" style={{ width: '40px', height: '40px' }} 
                                 onError={({ currentTarget }) =>
                                  { currentTarget.onerror = null; currentTarget.src="no_avatar.jpg"; currentTarget.srcset="no_avatar.jpg"}}/>
                             </a> 
-                            : <a href="#" className="pe-2" onClick={showModal}>
+                            : <a className="pe-2" onClick={showModal}>
                                 <FaSignInAlt size={28}/>
                             </a> 
                         }
