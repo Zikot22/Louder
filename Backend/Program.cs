@@ -28,7 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationContext>();
+builder.Services.AddDbContext<ApplicationContext>(ServiceLifetime.Transient);
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EventRepository>();
 builder.Services.AddScoped<TicketRepository>();

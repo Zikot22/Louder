@@ -1,4 +1,5 @@
 ﻿using Backend.Models;
+using Backend.Models.Updates;
 using Backend.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +8,11 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EventController : ControllerBase
+    public class EventController : CurrentUserController
     {
         private readonly EventRepository rep;
 
-        public EventController(EventRepository rep)
+        public EventController(EventRepository rep, IConfiguration config): base(config)
         {
             this.rep = rep;
         }
@@ -19,12 +20,23 @@ namespace Backend.Controllers
         [HttpPost("{id}/cover")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<ActionResult> UpdateEventCover([FromRoute] int id, IFormFile cover)
         {
-            var editingEvent = await rep.GetEvent(id);
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (!currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            var editingEvent = await rep.GetEventAsync(id);
             if (editingEvent == null)
             {
-                return NotFound("Мероприятие не найдено");
+                return NotFound(new { error = "Мероприятие не найдено" });
             }
             if (cover != null && cover.Length > 0)
             {
@@ -36,7 +48,7 @@ namespace Backend.Controllers
                 return NoContent();
             }
 
-            return BadRequest("Invalid cover file.");
+            return BadRequest(new { error = "Невалидное изображение" });
         }
 
         [HttpGet("filter")]
@@ -47,7 +59,25 @@ namespace Backend.Controllers
             var price = Request.Query.FirstOrDefault(p => p.Key == "price").Value;
             var date = Request.Query.FirstOrDefault(p => p.Key == "date").Value;
             var amount = Request.Query.FirstOrDefault(p => p.Key == "amount").Value;
-            var result = await rep.GetAllEvents(searchPattern, price, date, amount);
+            var result = await rep.GetEventsWithFilterAsync(searchPattern, price!, date!, amount!);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        {
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (!currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            var searchPattern = Request.Query.FirstOrDefault(p => p.Key == "searchPattern").Value.ToString().Trim();
+            var result = await rep.GetAllEventsAsync(searchPattern);
             return Ok(result);
         }
 
@@ -55,56 +85,79 @@ namespace Backend.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<Event>> GetEvent([FromRoute] int id)
         {
-            var result = await rep.GetEvent(id);
+            var result = await rep.GetEventAsync(id);
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<ActionResult> DeleteEvent([FromRoute] int id)
         {
-            await rep.DeleteEvent(id);
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (!currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            var deletingEvent = await rep.GetEventAsync(id);
+            if (deletingEvent == null) return NotFound(new { error = "Мероприятие не найдено" });
+            await rep.DeleteEventAsync(id);
             return NoContent();
         }
 
         [HttpPut]
         [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<ActionResult> CreateEvent(Event newEvent)
         {
-            await rep.AddEvent(newEvent);
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (!currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            await rep.AddEventAsync(newEvent);
             return NoContent();
         }
 
         [HttpPost("{id}")]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> UpdateEvent([FromRoute] int id, Event eventUpdate)
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public async Task<ActionResult> UpdateEvent([FromRoute] int id, EventUpdate eventUpdate)
         {
-            await rep.UpdateEvent(id, eventUpdate);
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (!currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            var updatingEvent = await rep.GetEventAsync(id);
+            if (updatingEvent == null) return NotFound(new { error = "Мероприятие не найдено" });
+            await rep.UpdateEventAsync(id, eventUpdate);
             return NoContent();
         }
 
         [HttpGet("{id}/tickets")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets([FromRoute] int id) 
         {
-            return Ok(await rep.GetTickets(id));
+            var currentEvent = await rep.GetEventAsync(id);
+            if (currentEvent == null) return NotFound(new { error = "Мероприятие не найдено" });
+            return Ok(await rep.GetTicketsAsync(id));
         }
-        
-        //[HttpPost("{id}/amount/decrease")]
-        //[ProducesResponseType(204)]
-        //public async Task<ActionResult<IEnumerable<Ticket>>> DecreaseAmount([FromRoute] int id) 
-        //{
-        //    int.TryParse(Request.Query.FirstOrDefault(p => p.Key == "amount").Value!, out var amount);
-        //    if (amount <= 0) amount = 1;
-        //    try 
-        //    {
-        //        await rep.DecreaseAmount(id, amount);
-        //    }
-        //    catch(Exception ex) 
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //    return NoContent();
-        //}
     }
 }

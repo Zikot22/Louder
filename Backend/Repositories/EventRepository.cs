@@ -1,5 +1,6 @@
 ﻿using Backend.DbConfigurations;
 using Backend.Models;
+using Backend.Models.Updates;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,16 +15,15 @@ namespace Backend.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<Event>> GetAllEvents(string searchPattern, string price, string date, string amount)
+        public async Task<IEnumerable<Event>> GetEventsWithFilterAsync(string searchPattern, string price, string date, string amount)
         {
             IQueryable<Event> query = context.Events;
             if (!string.IsNullOrWhiteSpace(searchPattern))
             {
-                query = query.Where(e => e.Name.Contains(searchPattern));
+                query = query.Where(e => EF.Functions.Like(e.Name!, $"%{searchPattern}%"));
             }
             switch (price) 
             {
-                //TODO
             }
             switch (date) 
             {
@@ -46,24 +46,41 @@ namespace Backend.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task AddEvent(Event newEvent)
+        public async Task<IEnumerable<Event>> GetAllEventsAsync(string searchPattern)
+        {
+            IQueryable<Event> query = context.Events;
+            if (!string.IsNullOrWhiteSpace(searchPattern))
+            {
+                query = query.Where(e =>
+                    EF.Functions.Like(e.Id.ToString(), $"%{searchPattern}%") ||
+                    EF.Functions.Like(e.Name!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(e.Adress!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(e.City!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(e.DateTime.ToString(), $"%{searchPattern}%") ||
+                    EF.Functions.Like(e.Description!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(e.Amount.ToString(), $"%{searchPattern}%"));
+            }
+            return await query.ToListAsync();
+        }
+
+        public async Task AddEventAsync(Event newEvent)
         {
             await context.Events.AddAsync(newEvent);
             await context.SaveChangesAsync();
         }
 
-        public async Task<Event> GetEvent(int id)
+        public async Task<Event> GetEventAsync(int id)
         {
             return await context.Events.FirstAsync(e => e.Id == id);
         }
 
-        public async Task DeleteEvent(int id)
+        public async Task DeleteEventAsync(int id)
         {
             await context.Events.Where(e => e.Id == id).ExecuteDeleteAsync();
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateEvent(int id, Event eventUpdate)
+        public async Task UpdateEventAsync(int id, EventUpdate eventUpdate)
         {
             var updatingEvent = await context.Events.FirstAsync(e => e.Id == id);
 
@@ -94,12 +111,12 @@ namespace Backend.Repositories
             context.SaveChanges();
         }
 
-        public async Task<IEnumerable<Ticket>> GetTickets(int id) 
+        public async Task<IEnumerable<Ticket>> GetTicketsAsync(int id) 
         {
             return await context.Tickets.Where(t => t.EventId == id).ToListAsync();
         }
 
-        public async Task DecreaseAmount(int ticketId, int amount) 
+        public async Task DecreaseAmountAsync(int ticketId, int amount) 
         {
             if (amount <= 0) throw new Exception("Некорректное количество билетов");
             var updatingEvent = (await context.Tickets.Include(t => t.Event).FirstAsync(t => t.Id == ticketId)).Event;

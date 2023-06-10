@@ -1,5 +1,6 @@
 ﻿using Backend.DbConfigurations;
 using Backend.Models;
+using Backend.Models.Updates;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories
@@ -13,29 +14,39 @@ namespace Backend.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<Ticket>> GetAllTickets()
+        public async Task<IEnumerable<Ticket>> GetAllTicketsAsync(string searchPattern)
         {
-            return await context.Tickets.ToListAsync();
+            IQueryable<Ticket> query = context.Tickets;
+            if (!string.IsNullOrWhiteSpace(searchPattern))
+            {
+                query = query.Where(t =>
+                    EF.Functions.Like(t.Id.ToString(), $"%{searchPattern}%") ||
+                    EF.Functions.Like(t.TypeName!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(t.TypeDescription!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(t.EventId!, $"%{searchPattern}%") ||
+                    EF.Functions.Like(t.Price.ToString(), $"%{searchPattern}%"));
+            }
+            return await query.ToListAsync();
         }
 
-        public async Task AddTicket(Ticket newTicket)
+        public async Task AddTicketAsync(Ticket newTicket)
         {
             await context.Tickets.AddAsync(newTicket);
             await context.SaveChangesAsync();
         }
 
-        public async Task<Ticket> GetTicket(int id)
+        public async Task<Ticket> GetTicketAsync(int id)
         {
             return await context.Tickets.FirstAsync(t => t.Id == id);
         }
 
-        public async Task DeleteTicket(int id)
+        public async Task DeleteTicketAsync(int id)
         {
             await context.Tickets.Where(t => t.Id == id).ExecuteDeleteAsync();
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateTicket(int id, Ticket ticketUpdate)
+        public async Task UpdateTicketAsync(int id, TicketUpdate ticketUpdate)
         {
             var updatingTicket = await context.Tickets.FirstAsync(t => t.Id == id);
 

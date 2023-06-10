@@ -13,7 +13,7 @@ const Events = ({events}) => {
           <Col xs="6" sm="4" md="4" lg="3" xl="3" key={index} className="d-flex align-items-stretch mb-3">
             <Link href={`/event/${event.id}`} className={styles.link}>
               <Card className="h-100">
-                <Card.Img variation="top" style={{ maxWidth: '300px' }} src={`${domain}/images/covers/${event.id}.jpg`} className="img-fluid"/>
+                <Card.Img variation="top" style={{ width: '300px' }} src={`${domain}/images/covers/${event.id}.jpg`} className="img-fluid"/>
                 <Card.Body>
                   <Card.Title tag="h5">{event.name}</Card.Title>
                   <Card.Subtitle tag="h6" className="mb-2 text-muted">{new Date(event.dateTime).toLocaleDateString()}</Card.Subtitle>
