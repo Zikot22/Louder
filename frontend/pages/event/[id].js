@@ -25,16 +25,21 @@ const Event = ({ event, tickets }) =>
             {
                 const userId = getCookie('userId');
                 purchases = purchases.map(ticketId => ({ ...ticketId, userId: userId }));
-                await fetch(`${domain}/Purchase`, {  
+                const response = await fetch(`${domain}/Purchase`, {  
                     method: 'POST',
                     headers: {  
                         'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + getCookie('token')
                     },
                     body: JSON.stringify(purchases)
                 });
-                
-                router.push('/account');
-                
+                if(response.ok) {
+                    router.push('/account');
+                }
+                else {
+                    var answer = await response.json();
+                    setError(answer.error)
+                };
             }
             catch (ex)
             {

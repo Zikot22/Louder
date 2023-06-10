@@ -1,19 +1,34 @@
-import { Card, Container, Col, Button, Link } from 'react-bootstrap';
+import { Card, Container, Button } from 'react-bootstrap';
 import { FaPencilAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 import packageInfo from "../../package.json";
 import { getCookie, deleteCookie } from 'cookies-next';
+import EditUserModal from './edit-user-modal'
 
-const UserProfileComponent = ({ onEdit }) => {
+const UserProfileComponent = () => {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-
   const domain = packageInfo.domain;
+  const [modalEdit, setModalEdit] = useState(false);
+  const handleOpenEdit = () => setModalEdit(true);
+  const handleCloseEdit = () => setModalEdit(false);
+  const [username, setUsername] = useState('no user');
 
-  useEffect(() => {
-    setUsername(getCookie('username') || 'no user');
-  })
+  useEffect(
+    () => {getUsername();}
+  );
+
+  const getUsername = async () => {
+    const response = await fetch(`${domain}/User/${getCookie('userId')}/username`, {  
+        method: 'GET',
+        headers: {  
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getCookie('token')
+        }
+      });
+    const answer = await response.json();
+    response.ok && setUsername(answer.name)
+  };
 
   const handleAvatarUpload = async (event) => {
     const file = event.target.files[0];
@@ -32,7 +47,6 @@ const UserProfileComponent = ({ onEdit }) => {
   const handleLogout = () => 
     {
       deleteCookie('token');
-      deleteCookie('username');
       deleteCookie('userId');
       router.push('/');
     }
@@ -65,7 +79,7 @@ const UserProfileComponent = ({ onEdit }) => {
                 onChange={handleAvatarUpload}
                 />
                 <Card.Body>
-                    <Card.Title tag="h3" className="d-flex align-items-center justify-content-center">{ username }<FaPencilAlt className="pt-1" onClick={onEdit} style={{ cursor: 'pointer' }}/></Card.Title>
+                    <Card.Title tag="h3" className="d-flex align-items-center justify-content-center">{ username }<FaPencilAlt className="pt-1" onClick={handleOpenEdit} style={{ cursor: 'pointer' }}/></Card.Title>
                     <Card.Text className="d-flex align-items-center justify-content-center">
                       <Button onClick={handleLogout} variant="danger">
                           Выйти
@@ -73,6 +87,7 @@ const UserProfileComponent = ({ onEdit }) => {
                     </Card.Text>
                 </Card.Body>
             </Card>
+            { modalEdit && <EditUserModal onClose={ handleCloseEdit }/>}
     </Container>
   );
 };

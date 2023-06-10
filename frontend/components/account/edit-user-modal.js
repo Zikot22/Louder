@@ -3,9 +3,9 @@ import { useState } from 'react';
 import packageInfo from "../../package.json"; 
 import { getCookie } from 'cookies-next';
 
-const EditUserModal = ({ onClose, selectedUser }) => {
+const EditUserModal = ({ onClose }) => {
   const [editData, setEditData] = useState({ name: '', email: '',
-     password: selectedUser.password, adminPermissions: selectedUser.adminPermissions })
+     password: '' })
   const [editError, setEditError] = useState('');
   const [show, setShow] = useState(true);
 
@@ -27,7 +27,7 @@ const EditUserModal = ({ onClose, selectedUser }) => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await fetch(`${domain}/User/admin/${selectedUser.id}`, {  
+        const response = await fetch(`${domain}/User/${getCookie('userId')}`, {  
         method: 'POST',
         headers: {  
           'Content-Type': 'application/json',
@@ -35,7 +35,6 @@ const EditUserModal = ({ onClose, selectedUser }) => {
         },
         body: JSON.stringify(editData),
       });
-
       if(response.ok) { handleClose() }
       else {
         var answer = await response.json();
@@ -47,16 +46,9 @@ const EditUserModal = ({ onClose, selectedUser }) => {
     }
   }
 
-  const handleCheckbox = () => {
-    setEditData((prevState) => ({
-      ...prevState,
-      adminPermissions: !prevState.adminPermissions,
-    }));
-  }
-
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header>Изменить пользователя {selectedUser.name}</Modal.Header>
+      <Modal.Header>Изменить пользователя</Modal.Header>
       <Modal.Body className='px-0'>
         <Form onSubmit={handleEditSubmit} className='p-0'>
           <Form.Group className='justify-content-center d-flex mb-2'>
@@ -82,16 +74,6 @@ const EditUserModal = ({ onClose, selectedUser }) => {
               name="password" 
               value={editData.password}
               onChange={handleEditChange}/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <Form.Check>
-              <input type="checkbox"
-                defaultChecked={selectedUser.adminPermissions}
-                value={editData.adminPermissions}
-                className='me-2'
-                onChange={handleCheckbox}/>
-              Админ права
-            </Form.Check>
           </Form.Group>
             {editError && <Alert className="text-center" variant="danger">{editError}</Alert>}
           <Form.Group className='justify-content-center d-flex mt-3'>

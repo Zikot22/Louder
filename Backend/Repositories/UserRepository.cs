@@ -50,6 +50,26 @@ namespace Backend.Repositories
         {
             var user = await context.Users.FirstAsync(u => u.Id == id);
 
+            if (!string.IsNullOrWhiteSpace(userUpdate.Password))
+            {
+                user.Password = userUpdate.Password;
+            }
+            if (!string.IsNullOrWhiteSpace(userUpdate.Email))
+            {
+                user.Email = userUpdate.Email;
+            }
+            if (!string.IsNullOrWhiteSpace(userUpdate.Name))
+            {
+                user.Name = userUpdate.Name;
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateUserAdminAsync(int id, UserAdminUpdate userUpdate)
+        {
+            var user = await context.Users.FirstAsync(u => u.Id == id);
+
             if (!string.IsNullOrWhiteSpace(userUpdate.Password)) 
             {
                 user.Password = userUpdate.Password;
@@ -71,7 +91,7 @@ namespace Backend.Repositories
         public async Task<User> LoginAsync(string email, string password) 
         {
             var user = await context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
-            return user;
+            return user!;
         }
 
         public async Task<bool> IsEmailExist(string email) 
@@ -79,6 +99,12 @@ namespace Backend.Repositories
             var user = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null) return false;
             return true;
+        }
+
+        public async Task<string> GetUsernameAsync(int id)
+        {
+            var user = await context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+            return user!.Name!;
         }
     }
 }

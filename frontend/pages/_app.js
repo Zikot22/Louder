@@ -19,8 +19,7 @@ function MyApp({ Component, pageProps }) {
       const decodedToken = jwt_decode(jwt);
       if(decodedToken.exp >= Date.now()) {
         deleteCookie('token');
-        deleteCookie('userId')
-        deleteCookie('username')
+        deleteCookie('userId');
         setIsLoggedIn(false);
       }
       else{

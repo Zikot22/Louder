@@ -2,7 +2,7 @@
 
 namespace Backend.Models.Updates
 {
-    public class UserUpdate
+    public class UserAdminUpdate
     {
         [StringLength(320)]
         public string? Email { get; set; }
@@ -12,5 +12,7 @@ namespace Backend.Models.Updates
 
         [StringLength(16)]
         public string? Password { get; set; }
+
+        public bool AdminPermissions { get; set; }
     }
 }
