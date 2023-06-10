@@ -123,6 +123,32 @@ namespace Backend.Controllers
             return NoContent();
         }
 
+        [HttpPost("admin/{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        public async Task<ActionResult> UpdateUserAdmin([FromRoute] int id, UserAdminUpdate userUpdate)
+        {
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (!currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            var emailExist = await rep.IsEmailExist(userUpdate.Email!);
+            if (emailExist) return BadRequest(new { error = "Пользователь с таким адресом электронной почты уже существует" });
+            var user = await rep.GetUserAsync(id);
+            if(user == null) 
+            {
+                return NotFound(new { error = "Пользователь не найден" });
+            }
+            await rep.UpdateUserAdminAsync(id, userUpdate);
+            return NoContent();
+        }
+
         [HttpPost("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
@@ -141,7 +167,7 @@ namespace Backend.Controllers
             var emailExist = await rep.IsEmailExist(userUpdate.Email!);
             if (emailExist) return BadRequest(new { error = "Пользователь с таким адресом электронной почты уже существует" });
             var user = await rep.GetUserAsync(id);
-            if(user == null) 
+            if (user == null)
             {
                 return NotFound(new { error = "Пользователь не найден" });
             }
@@ -177,6 +203,30 @@ namespace Backend.Controllers
             var token = JsonSerializer.Serialize(GenerateToken(user));
             SetJwtCookie(token);
             return Ok(token);
+        }
+
+        [HttpGet("{id}/username")]
+        [IgnoreAntiforgeryToken]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<string>> GetUsername([FromRoute] int id)
+        {
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (currentUser.Id != id && !currentUser.AdminPermissions)
+            {
+                return Forbid();
+            }
+            var user = await rep.GetUserAsync(id);
+            if (user == null)
+            {
+                return NotFound(new { error = "Пользователь не найден" });
+            }
+            var username = await rep.GetUsernameAsync(id);
+            return Ok(new { name = username });
         }
 
         private string GenerateToken(User user)
