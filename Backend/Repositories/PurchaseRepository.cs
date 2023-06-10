@@ -14,7 +14,7 @@ namespace Backend.Repositories
             this.context = context;
         }
 
-        public async Task AddPurchases(IEnumerable<Purchase> purchases)
+        public async Task AddPurchasesAsync(IEnumerable<Purchase> purchases)
         {
             foreach(var newPurchase in purchases)
             {
@@ -31,12 +31,12 @@ namespace Backend.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Purchase>> GetUserPurchases(int id, string searchPattern)
+        public async Task<IEnumerable<Purchase>> GetUserPurchasesAsync(int id, string searchPattern)
         {
             IQueryable<Purchase> query = context.Purchases.Include(p => p.Ticket).ThenInclude(p => p.Event).Where(p => p.UserId == id);
             if (!string.IsNullOrWhiteSpace(searchPattern))
             {
-                query = query.Where(p => p.Ticket.Event.Name.Contains(searchPattern));
+                query = query.Where(p => p.Ticket.Event.Name!.Contains(searchPattern));
             }
             return await query.Select(p => new Purchase
             {

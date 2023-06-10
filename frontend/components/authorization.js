@@ -4,7 +4,7 @@ import styles from "../styles/components/authorization.module.css";
 import { useRouter } from 'next/router';
 import packageInfo from "../package.json";
 import { setCookie } from 'cookies-next';
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 const LoginRegistrationForm = ({onClose})  => {
   const router = useRouter();
@@ -44,7 +44,7 @@ const LoginRegistrationForm = ({onClose})  => {
 
       if (response.ok) {
         const token = await response.json();
-        const decodedToken = jwt_decode(token);
+        const decodedToken = jwtDecode(token);
         
         setCookie('token', token, { maxAge: 60 * 60 * 24 * 7 * 2})
         setCookie('userId', decodedToken.Id, { maxAge: 60 * 60 * 24 * 7 * 2});
@@ -94,7 +94,7 @@ const LoginRegistrationForm = ({onClose})  => {
   
         if (response.ok) {
           const token = await response.json();
-          const decodedToken = jwt_decode(token);
+          const decodedToken = jwtDecode(token);
 
           setCookie('token', token, { maxAge: 60 * 60 * 24 * 7 * 2})
           setCookie('userId', decodedToken.Id, { maxAge: 60 * 60 * 24 * 7 * 2});
@@ -124,7 +124,7 @@ const LoginRegistrationForm = ({onClose})  => {
         <Tab eventKey="login" title="Вход">
           <Form onSubmit={handleLoginSubmit} className="pt-4 pb-3 px-0">
             <Form.Group className={styles.form_text}>
-              <input className="col-10  px-2 py-1"
+              <input className="col-10 px-2 py-1"
                 placeholder="Электронная почта"
                 type="email"
                 name="email"

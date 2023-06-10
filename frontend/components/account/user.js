@@ -19,7 +19,7 @@ const UserProfileComponent = ({ onEdit }) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('avatar', file);
-    const response = await fetch(`${domain}/User/avatar`, {
+    const response = await fetch(`${domain}/User/${getCookie('userId')}/avatar`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + getCookie('token'),

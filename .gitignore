@@ -17,3 +17,5 @@
 /Backend/Backend.csproj.user
 /frontend/node_modules
 /frontend/.next
+/adminpanel/node_modules
+/adminpanel/.next

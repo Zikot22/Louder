@@ -1,0 +1,19 @@
+.overflow-cell {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+body{
+  background-color: #d8d8d8;
+}
+
+button{
+  background-color: #FF4938 !important;
+  border: 0px !important;
+}
+
+button:hover{
+  background-color: #FF6052 !important;
+}
