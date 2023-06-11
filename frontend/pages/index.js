@@ -7,13 +7,12 @@ import { useRouter } from 'next/router';
 
 const domain = packageInfo.domain;
 
-const Index = ({ events,  urlSearchPattern, urlPrice, urlDate, urlAmount  }) => 
+const Index = ({ events,  urlSearchPattern, urlPrice, urlDate, urlAmount }) => 
 {
     const [searchPattern, setSearchPattern] = useState(urlSearchPattern || '');
     const [price, setPrice] = useState(urlPrice || 'default');
     const [date, setDate] = useState(urlDate || 'default');
     const [amount, setAmount] = useState(urlAmount || 'default');
-
 
     const router = useRouter();
     useEffect(() => {
@@ -40,10 +39,13 @@ const Index = ({ events,  urlSearchPattern, urlPrice, urlDate, urlAmount  }) =>
 
 export default Index;
 
-export async function getServerSideProps({query}) {
+export async function getServerSideProps(context) {
+    const { query } = context;
+    const selectedCity = context.req.cookies.selectedCity;
     const { searchpattern, price, date, amount } = query;
+    
     const responce = await fetch(`${domain}/Event/filter?searchPattern=${searchpattern || ''}
-        &price=${price || ''}&date=${date || ''}&amount=${amount || ''}`);
+        &price=${price || ''}&date=${date || ''}&amount=${amount || ''}&city=${selectedCity || ''}`);
     const events = await responce.json();
     return { 
         props: {

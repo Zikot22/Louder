@@ -3,16 +3,21 @@ import LogoIcon from "./icons/LogoIcon";
 import { useEffect, useState } from "react";
 import LoginRegistrationForm from "./authorization-modal";
 import { useRouter } from 'next/router';
-import { FaSignInAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import packageInfo from "../package.json";
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
+import CityPicker from "./city-picker-modal";
 
 const Header = ( {isLoggedIn} ) => {
     const router = useRouter();
+    const domain = packageInfo.domain;
     const [modalAuthorization, setModalAuthorization] = useState(false);
     const handleOpenAuthorization = () => setModalAuthorization(true);
     const handleCloseAuthorization = () => setModalAuthorization(false);
-    const domain = packageInfo.domain;
+    const [selectedCity, setSelectCity] = useState('');
+    const [modalCityPicker, setModalCityPicker] = useState(false);
+    const handleOpenCityPicker = () => setModalCityPicker(true);
+    const handleCloseCityPicker = () => setModalCityPicker(false);
 
     useEffect(() => {
         var img = document.getElementById("header-avatar");
@@ -23,15 +28,29 @@ const Header = ( {isLoggedIn} ) => {
         }
     });
 
+    useEffect(() => {
+        var city = getCookie('selectedCity');
+
+        if (!city) {
+            setCookie('selectedCity', 'Ростов-на-Дону');
+            setSelectCity('Ростов-на-Дону');
+        } 
+        else {
+        setSelectCity(city);
+        }
+    })
+
     return (
         <>
         <Navbar>
             <Container>
-                <Navbar.Brand href="/">
-                    <LogoIcon/> Быстрые отчеты
-                    &nbsp; &nbsp;
-                    <LogoIcon/><Button variant="link" className="text-decoration-none px-0"><p className="m-0">Москва</p></Button>
-                    </Navbar.Brand>
+                <Navbar.Brand>
+                    <a href="/">
+                        <LogoIcon/>
+                    </a>
+                    &nbsp;
+                    <FaMapMarkerAlt/><Button variant="link" className="text-decoration-none pe-0 ps-1" onClick={handleOpenCityPicker}><p className="m-0">{selectedCity}</p></Button>
+                </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text style={{cursor: 'pointer'}} className="py-0">
@@ -50,6 +69,7 @@ const Header = ( {isLoggedIn} ) => {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+        { modalCityPicker && <CityPicker onClose={handleCloseCityPicker}/> }
         { modalAuthorization && <LoginRegistrationForm onClose={handleCloseAuthorization}/> }
         </>
     );

@@ -2,7 +2,7 @@ import EventInformationComponent from "../../components/event/event-information"
 import SeatSelectorComponent from "../../components/event/seat-selector";
 import { useRouter } from 'next/router';
 import packageInfo from "../../package.json";
-import ErrorMessage from "../../components/error";
+import ErrorMessage from "../../components/error-modal";
 import { getCookie } from "cookies-next";
 import { useState } from "react";
 
