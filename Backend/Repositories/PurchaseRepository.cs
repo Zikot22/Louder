@@ -33,10 +33,10 @@ namespace Backend.Repositories
 
         public async Task<IEnumerable<Purchase>> GetUserPurchasesAsync(int id, string searchPattern)
         {
-            IQueryable<Purchase> query = context.Purchases.Include(p => p.Ticket).ThenInclude(p => p.Event).Where(p => p.UserId == id);
+            IQueryable<Purchase> query = context.Purchases.Include(p => p.Ticket).ThenInclude(p => p!.Event).Where(p => p.UserId == id);
             if (!string.IsNullOrWhiteSpace(searchPattern))
             {
-                query = query.Where(p => p.Ticket.Event.Name!.Contains(searchPattern));
+                query = query.Where(p => p.Ticket!.Event!.Name!.Contains(searchPattern) || p.Ticket!.Event!.City!.Contains(searchPattern));
             }
             return await query.Select(p => new Purchase
             {

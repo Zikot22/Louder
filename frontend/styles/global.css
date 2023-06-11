@@ -26,3 +26,10 @@ p, a
 .no-ws {
     min-height: calc(100vh - 112px);
 }
+
+.cities {
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0;
+    cursor: pointer;
+}

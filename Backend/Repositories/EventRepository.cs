@@ -15,9 +15,13 @@ namespace Backend.Repositories
             this.context = context;
         }
 
-        public async Task<IEnumerable<Event>> GetEventsWithFilterAsync(string searchPattern, string price, string date, string amount)
+        public async Task<IEnumerable<Event>> GetEventsWithFilterAsync(string searchPattern, string price, string date, string amount, string city)
         {
             IQueryable<Event> query = context.Events;
+            if (!string.IsNullOrEmpty(city)) 
+            {
+                query = query.Where(e => e.City == city);
+            }
             if (!string.IsNullOrWhiteSpace(searchPattern))
             {
                 query = query.Where(e => EF.Functions.Like(e.Name!, $"%{searchPattern}%"));

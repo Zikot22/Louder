@@ -59,7 +59,8 @@ namespace Backend.Controllers
             var price = Request.Query.FirstOrDefault(p => p.Key == "price").Value;
             var date = Request.Query.FirstOrDefault(p => p.Key == "date").Value;
             var amount = Request.Query.FirstOrDefault(p => p.Key == "amount").Value;
-            var result = await rep.GetEventsWithFilterAsync(searchPattern, price!, date!, amount!);
+            var city = Request.Query.FirstOrDefault(p => p.Key == "city").Value;
+            var result = await rep.GetEventsWithFilterAsync(searchPattern, price!, date!, amount!, city!);
             return Ok(result);
         }
 

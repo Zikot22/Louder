@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps}/>
       </div>
     <Footer/>
-  </>
+</>
 }
 
 export default MyApp;
