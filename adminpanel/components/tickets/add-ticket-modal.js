@@ -1,6 +1,6 @@
 import { Button, Alert, Form, Modal } from 'react-bootstrap';
 import { useState } from 'react';
-import packageInfo from "../../package.json"; 
+import packageInfo from '../../package.json'; 
 import { getCookie } from 'cookies-next';
 
 const AddTicketModal = ( { onClose } ) => {
@@ -51,43 +51,43 @@ const AddTicketModal = ( { onClose } ) => {
       <Modal.Body className='px-0'>
         <Form onSubmit={handleCreationSubmit} className='p-0'>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Id мероприятия"
-              name="eventId" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Id мероприятия'
+              name='eventId' 
               value={creationData.eventId}
               onChange={handleCreationChange}
               required/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Цена"
-              name="price" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Цена'
+              name='price' 
               value={creationData.price}
               onChange={handleCreationChange}
               required/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Имя"
-              name="typeName" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Имя'
+              name='typeName' 
               value={creationData.typeName}
               onChange={handleCreationChange}
               required/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Описание"
-              name="typeDescription" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Описание'
+              name='typeDescription' 
               value={creationData.typeDescription}
               onChange={handleCreationChange}/>
           </Form.Group>
-            {creationError && <Alert className="text-center" variant="danger">{creationError}</Alert>}
+            {creationError && <Alert className='text-center' variant='danger'>{creationError}</Alert>}
           <Form.Group className='justify-content-center d-flex mt-3'>
-            <Button type="submit">Создать</Button>
+            <Button type='submit'>Создать</Button>
           </Form.Group>
         </Form>
       </Modal.Body>

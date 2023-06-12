@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Container, Tabs, Tab, Form, Button, Alert, Modal } from "react-bootstrap";
-import styles from "../styles/components/authorization.module.css";
+import { useState } from 'react';
+import { Tabs, Tab, Form, Button, Alert, Modal } from 'react-bootstrap';
+import styles from '../styles/components/authorization.module.css';
 import { useRouter } from 'next/router';
-import packageInfo from "../package.json";
+import packageInfo from '../package.json';
 import { setCookie } from 'cookies-next';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 
 const LoginRegistrationForm = ({onClose})  => {
-  const [show, setShow] = useState(true);
   const router = useRouter();
   const domain = packageInfo.domain;
+  const [show, setShow] = useState(true);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [registrationData, setRegistrationData] = useState({ name: '', email: '', password: ''});
   const [registrationErrors, setRegistrationErrors] = useState({});
@@ -56,7 +56,8 @@ const LoginRegistrationForm = ({onClose})  => {
         setCookie('userId', decodedToken.Id, { maxAge: 60 * 60 * 24 * 7 * 2});
         
         router.push('/account');
-        onClose(); } 
+        onClose(); 
+      } 
       else {
         setLoginError('Неправильный email или пароль');
       }
@@ -101,7 +102,7 @@ const LoginRegistrationForm = ({onClose})  => {
           const token = await response.json();
           const decodedToken = jwtDecode(token);
 
-          setCookie('token', token, { maxAge: 60 * 60 * 24 * 7 * 2})
+          setCookie('token', token, { maxAge: 60 * 60 * 24 * 7 * 2});
           setCookie('userId', decodedToken.Id, { maxAge: 60 * 60 * 24 * 7 * 2});
 
           router.push('/account');
@@ -113,7 +114,7 @@ const LoginRegistrationForm = ({onClose})  => {
         }
       } 
       catch {
-        errors.other = 'Во время регистрации произошла ошибка'
+        errors.other = 'Во время регистрации произошла ошибка';
         setRegistrationErrors(errors);
       }
     } 
@@ -123,85 +124,85 @@ const LoginRegistrationForm = ({onClose})  => {
   };
 
   return (
-    <Modal size="sm" show={show} onHide={handleClose}>
-      <Modal.Body className="p-0">
-        <Tabs defaultActiveKey="login" fill>
-          <Tab eventKey="login" title="Вход">
-            <Form onSubmit={handleLoginSubmit} className="pt-4 pb-3 px-0">
-              <Form.Group className={styles.form_text}>
-                <input className="col-10 px-2 py-1"
-                  placeholder="Электронная почта"
-                  type="email"
-                  name="email"
-                  id="loginEmail"
+    <Modal size='sm' show={show} onHide={handleClose} as='dialog'>
+      <Modal.Body className='p-0'>
+        <Tabs defaultActiveKey='login' fill>
+          <Tab eventKey='login' title='Вход'>
+            <Form onSubmit={handleLoginSubmit} className='pt-4 px-0' as='form'>
+              <Form.Group className={styles.form_text} as='p'>
+                <input className='col-10 px-2 py-1'
+                  placeholder='Электронная почта'
+                  type='email'
+                  name='email'
+                  id='loginEmail'
                   value={loginData.email}
                   onChange={handleLoginChange}
                   required
                   />
                 </Form.Group>
-                <Form.Group className={styles.form_text}>
-                  <input className="col-10 px-2 py-1"
-                    placeholder="Пароль"
-                    type="password"
-                    name="password"
-                    id="loginPassword"
+                <Form.Group className={styles.form_text} as='p'>
+                  <input className='col-10 px-2 py-1'
+                    placeholder='Пароль'
+                    type='password'
+                    name='password'
+                    id='loginPassword'
                     value={loginData.password}
                     onChange={handleLoginChange}
                     required
                     />
                 </Form.Group>
-                {loginError && <Alert className="text-center" variant="danger">{loginError}</Alert>}
-                <Form.Group className="d-flex justify-content-center">
-                  <Button color="primary" type="submit" className="col-3">
+                {loginError && <Alert className='text-center' variant='danger'>{loginError}</Alert>}
+                <Form.Group className='d-flex justify-content-center' as='p'>
+                  <Button type='submit' className='col-3 button-fr'>
                     Войти
                   </Button>
                 </Form.Group>
             </Form>
           </Tab>
-          <Tab eventKey="password" title="Регистрация">
-            <Form onSubmit={handleRegistrationSubmit} className="pt-4 pb-3 px-0">
-              <Form.Group className={styles.form_text}>
-                <input type="text" className="col-10 px-2 py-1"
-                  placeholder="Имя"
-                  name="name"
-                  id="registrationName"
+          <Tab eventKey='password' title='Регистрация'>
+            <Form onSubmit={handleRegistrationSubmit} className='pt-4 px-0' as='form'>
+              <Form.Group className={styles.form_text} as='p'>
+                <input type='text' className='col-10 px-2 py-1'
+                  placeholder='Имя'
+                  name='name'
+                  id='registrationName'
                   value={registrationData.name}
                   onChange={handleRegistrationChange}
                   required
                   />
               </Form.Group>
-              {registrationErrors.name && <Alert className="text-center" variant="danger">{registrationErrors.name}</Alert>}
-              <Form.Group className={styles.form_text}>
-                <input type="email" className="col-10 px-2 py-1"
-                  placeholder="Электронная почта"
-                  name="email"
-                  id="registrationEmail"
+              {registrationErrors.name && <Alert className='text-center' variant='danger'>{registrationErrors.name}</Alert>}
+              <Form.Group className={styles.form_text} as='p'>
+                <input type='email' className='col-10 px-2 py-1'
+                  placeholder='Электронная почта'
+                  name='email'
+                  id='registrationEmail'
                   value={registrationData.email}
                   onChange={handleRegistrationChange}
                   required
                 />
               </Form.Group>
-              {registrationErrors.email && <Alert className="text-center" variant="danger">{registrationErrors.email}</Alert>}
-              <Form.Group className={styles.form_text + ' mb-2'}>
-                <input type="password" className="col-10 ml-2 px-2 py-1"
-                  placeholder="Пароль"
-                  name="password"
-                  id="registrationPassword"
+              {registrationErrors.email && <Alert className='text-center' variant='danger'>{registrationErrors.email}</Alert>}
+              <Form.Group className={styles.form_text + ' mb-2'} as='p'>
+                <input type='password' className='col-10 ml-2 px-2 py-1'
+                  placeholder='Пароль'
+                  name='password'
+                  id='registrationPassword'
                   value={registrationData.password}
                   onChange={handleRegistrationChange}
                   required
                   />
               </Form.Group>
-              {registrationErrors.password && <Alert className="text-center" variant="danger">{registrationErrors.password}</Alert>}
-              <Form.Group check className={styles.form_text + ' mb-2'}>
-                <label check className="col-10"> 
-                  <input type="checkbox" required/>{' '}
-                  Я принимаю <a href="#">соглашение об обработке данных</a>
+              {registrationErrors.password && <Alert className='text-center' variant='danger'>{registrationErrors.password}</Alert>}
+              <Form.Group check className={styles.form_text + ' mb-2'} as='p'>
+                <label check className='col-10'> 
+                  <input type='checkbox' required className='col-1'/>{' '}
+                  Я принимаю <a href='#'>соглашение об обработке данных</a>
                 </label>
               </Form.Group>
-              {registrationErrors.other && <Alert className="text-center" variant="danger">{registrationErrors.other}</Alert>}
-              <Form.Group className="d-flex justify-content-center">
-                <Button color="primary" type="submit" className="col-8">
+              {registrationErrors.other && <Alert className='text-center' variant='danger'>{registrationErrors.other}</Alert>}
+              <Form.Group className='d-flex justify-content-center' as='p'>
+                <Button type='submit' className='col-8 button-fr'>
                   Зарегистрироваться
                 </Button>
               </Form.Group>

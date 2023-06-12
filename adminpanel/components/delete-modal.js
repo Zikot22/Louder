@@ -1,6 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useState } from 'react';
-import packageInfo from "../package.json"; 
+import packageInfo from '../package.json'; 
 
 const DeleteModal = ({ onClose, onConfirm }) => {
   const [show, setShow] = useState(true);

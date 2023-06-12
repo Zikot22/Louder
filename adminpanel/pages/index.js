@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Table, Col, Button } from 'react-bootstrap';
-import packageInfo from "../package.json"; 
+import packageInfo from '../package.json'; 
 import AddUserModal from '../components/index/add-user-modal';
 import EditUserModal from '../components/index/edit-user-modal';
 import { FaEye, FaPen, FaTrash } from 'react-icons/fa';
@@ -138,13 +138,13 @@ const Index = () => {
     <Container>
       <h1 className='mt-2'>Пользователи</h1>
         <Col className='mt-4'>
-          <input type="text" className='ps-2 pe-1 py-1' placeholder="Поиск" value={searchPattern} onChange={handleSearchChange} />
+          <input type='text' className='ps-2 pe-1 py-1' placeholder='Поиск' value={searchPattern} onChange={handleSearchChange} />
         </Col>
         <Col className='mt-2'>
           <Button onClick={handleAddUser}>Добавить пользователя</Button>
         </Col>
-        <div className="table-responsive">
-            <Table striped className="mt-4 table-responsive">
+        <div className='table-responsive'>
+            <Table striped className='mt-4 table-responsive'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -159,18 +159,18 @@ const Index = () => {
                 <tbody>
                 {users.map((user) => (
                     <tr key={user.id}>
-                    <td className="overflow-cell">{user.id}</td>
-                    <td className="overflow-cell">{user.name}</td>
-                    <td className="overflow-cell">{user.email}</td>
-                    <td className="overflow-cell">{user.password}</td>
-                    <td className="overflow-cell">{user.adminPermissions ? 'Да' : 'Нет'}</td>
-                    <td className="overflow-cell">
+                    <td className='overflow-cell'>{user.id}</td>
+                    <td className='overflow-cell'>{user.name}</td>
+                    <td className='overflow-cell'>{user.email}</td>
+                    <td className='overflow-cell'>{user.password}</td>
+                    <td className='overflow-cell'>{user.adminPermissions ? 'Да' : 'Нет'}</td>
+                    <td className='overflow-cell'>
                       <FaPen className='ms-1 mb-1 me-3' onClick={() => handleChangeAvatar(user)} style={{cursor: 'pointer'}}></FaPen>
-                      <a href={`${domain}/images/avatars/${user.id}.jpg`} target="_blank">
+                      <a href={`${domain}/images/avatars/${user.id}.jpg`} target='_blank'>
                         <FaEye className='mb-1 me-3' style={{cursor: 'pointer', color: 'black'}}></FaEye>
                       </a>
                       </td>
-                    <td className="overflow-cell">
+                    <td className='overflow-cell'>
                         <FaPen onClick={() => handleEditUser(user)} className='ms-1 mb-1 me-3' style={{cursor: 'pointer'}}></FaPen>
                         <FaTrash onClick={() => handleDeleteUser(user)} className='mb-1' style={{cursor: 'pointer'}}></FaTrash>
                     </td>
@@ -180,9 +180,9 @@ const Index = () => {
             </Table>
         </div>
         <input
-          id="avatar-input"
-          type="file"
-          accept="image/jpeg"
+          id='avatar-input'
+          type='file'
+          accept='image/jpeg'
           style={{ display: 'none' }}
           onChange={handleAvatarUpload}
           />

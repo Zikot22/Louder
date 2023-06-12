@@ -1,6 +1,6 @@
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { useState } from 'react';
-import packageInfo from "../../package.json"; 
+import packageInfo from '../../package.json'; 
 import { getCookie } from 'cookies-next';
 
 const EditEventModal = ({ onClose, selectedEvent }) => {
@@ -42,7 +42,7 @@ const EditEventModal = ({ onClose, selectedEvent }) => {
       };
     } 
     catch {
-      setEditError("Во время изменения произошла ошибка");
+      setEditError('Во время изменения произошла ошибка');
     }
   }
 
@@ -52,55 +52,55 @@ const EditEventModal = ({ onClose, selectedEvent }) => {
       <Modal.Body className='px-0'>
         <Form onSubmit={handleEditSubmit} className='p-0'>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Имя"
-              name="name" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Имя'
+              name='name' 
               value={editData.name}
               onChange={handleEditChange}/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Описание"
-              name="description" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Описание'
+              name='description' 
               value={editData.description}
               onChange={handleEditChange}/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Город"
-              name="city" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Город'
+              name='city' 
               value={editData.city}
               onChange={handleEditChange}/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Адрес"
-              name="adress" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Адрес'
+              name='adress' 
               value={editData.adress}
               onChange={handleEditChange}/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="datetime-local"
-              className="col-7 px-2 py-1"
-              name="dateTime" 
+            <input type='datetime-local'
+              className='col-7 px-2 py-1'
+              name='dateTime' 
               value={editData.dateTime}
               onChange={handleEditChange}/>
           </Form.Group>
           <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Количество билетов"
-              name="amount" 
+            <input type='text'
+              className='col-7 px-2 py-1'
+              placeholder='Количество билетов'
+              name='amount' 
               value={editData.amount}
               onChange={handleEditChange}/>
           </Form.Group>
-            {editError && <Alert className="text-center" variant="danger">{editError}</Alert>}
+            {editError && <Alert className='text-center' variant='danger'>{editError}</Alert>}
           <Form.Group className='justify-content-center d-flex mt-3'>
-            <Button type="submit">Изменить</Button>
+            <Button type='submit'>Изменить</Button>
           </Form.Group>
         </Form>
       </Modal.Body>

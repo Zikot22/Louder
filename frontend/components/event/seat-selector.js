@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, Button, Container, Col } from 'react-bootstrap';
 import SeatComponent from './seat';
 
 const SeatSelectorComponent = ({ tickets, onBuy }) => {
-  
   const [totalPrice, setTotalPrice] = useState(0);
   const [purchases, setPurchases] = useState([]);
-  // const [totalQuantity, setTotalQuantity] = useState(0);
 
   const setPrice = (value) => {
     setTotalPrice(totalPrice + value);
   };
-
-  // const setQuantity = (value) => {
-  //   setTotalQuantity(totalQuantity + value)
-  // };
 
   const handleSelectTicket = (ticketId, count) => {
     const updatedPurchases = [...purchases];
@@ -29,24 +23,22 @@ const SeatSelectorComponent = ({ tickets, onBuy }) => {
   };
 
   return (
-    <Container className='pb-3'>  
+    <Container className='pb-3' as='section'>  
         <h3 className='mb-3'>Купить билет</h3>
         <Card>
-        <Card.Body>
-          {tickets?.map((ticket, index) =>(
-            <SeatComponent key={index} ticket={ticket} setPrice={setPrice} onSelectTicket={handleSelectTicket}></SeatComponent>
-            // setPrice={setPrice} setTotalQuantity={setQuantity}
-          ))}
-          <Col className='d-flex justify-content-end'>
-              <div className='mb-2'>Итог: {totalPrice} рублей</div>
-              {/* {totalPrice} рублей */}
-          </Col>
-          <Col className='d-flex justify-content-end'>
-              <Button color="primary" onClick={() => onBuy(purchases)}>
-                  Купить
-              </Button>
-          </Col>
-        </Card.Body>
+          <Card.Body>
+            {tickets?.map((ticket, index) =>(
+              <SeatComponent key={index} ticket={ticket} setPrice={setPrice} onSelectTicket={handleSelectTicket}></SeatComponent>
+            ))}
+            <Col className='d-flex justify-content-end'>
+                <p className='mb-2'>Итог: {totalPrice} рублей</p>
+            </Col>
+            <Col className='d-flex justify-content-end'>
+                <Button className='button-fr' onClick={() => onBuy(purchases)}>
+                    Купить
+                </Button>
+            </Col>
+          </Card.Body>
         </Card>
     </Container>
   );

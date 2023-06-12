@@ -1,19 +1,19 @@
 .card_container {
     overflow: hidden;
-    height: 100%; /* Ensure the parent container has a height */
+    height: 100%;
   }
   
-  .scroll_container {
-    overflow-x: auto;
-    height: 100%; /* Ensure the scroll container has a height */
-  }
-  
-  .card_row {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-  
-  .card_row > .card {
-    flex: 0 0 auto;
-    margin-right: 15px; /* Adjust the margin as needed */
-  }
+.scroll_container {
+  overflow-x: auto;
+  height: 100%;
+}
+
+.card_row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.card_row > .card {
+  flex: 0 0 auto;
+  margin-right: 15px;
+}

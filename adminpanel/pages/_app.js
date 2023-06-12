@@ -1,10 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import AdminNavigation from "../components/navbar";
-import "../styles/global.css";
-import jwtDecode from "jwt-decode";
-import { useEffect, useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AdminNavigation from '../components/navbar';
+import '../styles/global.css';
+import jwtDecode from 'jwt-decode';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'; 
-import { deleteCookie, getCookie } from "cookies-next";
+import { deleteCookie, getCookie } from 'cookies-next';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -30,7 +30,9 @@ function MyApp({ Component, pageProps }) {
 
   return <>
     {!isLoginPage && <AdminNavigation/>}
-    {(isLoginPage || isLogIn) && <Component {...pageProps}/>}
+    <main>
+      {(isLoginPage || isLogIn) && <Component {...pageProps}/>}
+    </main>
   </>
 }
 

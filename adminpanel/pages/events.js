@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Table, Col, Button } from 'react-bootstrap';
-import packageInfo from "../package.json";
+import packageInfo from '../package.json';
 import AddEventModal from '../components/events/add-event-modal';
 import EditEventModal from '../components/events/edit-event-modal';
 import { FaEye, FaPen, FaTrash } from 'react-icons/fa';
@@ -138,13 +138,13 @@ const Events = () => {
     <Container>
       <h1 className='mt-2'>Мероприятия</h1>
         <Col className='mt-4'>
-          <input type="text" className='px-2 py-1' placeholder="Поиск" value={searchPattern} onChange={handleSearchChange} />
+          <input type='text' className='px-2 py-1' placeholder='Поиск' value={searchPattern} onChange={handleSearchChange} />
         </Col>
         <Col className='mt-2'>
           <Button onClick={handleAddEvent}>Добавить мероприятие</Button>
         </Col>
-        <div className="table-responsive">
-            <Table striped className="mt-4 table-responsive">
+        <div className='table-responsive'>
+            <Table striped className='mt-4 table-responsive'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -161,20 +161,20 @@ const Events = () => {
                 <tbody>
                 {events.map((event) => (
                     <tr key={event.id}>
-                    <td className="overflow-cell">{event.id}</td>
-                    <td className="overflow-cell">{event.name}</td>
-                    <td className="overflow-cell">{event.description}</td>
-                    <td className="overflow-cell">{event.city}</td>
-                    <td className="overflow-cell">{event.adress}</td>
-                    <td className="overflow-cell">{event.dateTime}</td>
-                    <td className="overflow-cell">{event.amount}</td>
-                    <td className="overflow-cell">
+                    <td className='overflow-cell'>{event.id}</td>
+                    <td className='overflow-cell'>{event.name}</td>
+                    <td className='overflow-cell'>{event.description}</td>
+                    <td className='overflow-cell'>{event.city}</td>
+                    <td className='overflow-cell'>{event.adress}</td>
+                    <td className='overflow-cell'>{event.dateTime}</td>
+                    <td className='overflow-cell'>{event.amount}</td>
+                    <td className='overflow-cell'>
                       <FaPen className='ms-1 mb-1 me-3' onClick={() => handleChangeCover(event)} style={{cursor: 'pointer'}}></FaPen>
-                      <a href={`${domain}/images/covers/${event.id}.jpg`} target="_blank">
+                      <a href={`${domain}/images/covers/${event.id}.jpg`} target='_blank'>
                         <FaEye className='mb-1 me-3' style={{cursor: 'pointer', color: 'black'}}></FaEye>
                       </a>
                       </td>
-                    <td className="overflow-cell">
+                    <td className='overflow-cell'>
                         <FaPen onClick={() => handleEditEvent(event)} className='ms-1 mb-1 me-3' style={{cursor: 'pointer'}}></FaPen>
                         <FaTrash onClick={() => handleDeleteEvent(event)} className='mb-1' style={{cursor: 'pointer'}}></FaTrash>
                     </td>
@@ -184,9 +184,9 @@ const Events = () => {
             </Table>
         </div>
         <input
-          id="cover-input"
-          type="file"
-          accept="image/jpeg"
+          id='cover-input'
+          type='file'
+          accept='image/jpeg'
           style={{ display: 'none' }}
           onChange={handleCoverUpload}
           />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Table, Col, Button } from 'react-bootstrap';
-import packageInfo from "../package.json";
+import packageInfo from '../package.json';
 import AddTicketModal from '../components/tickets/add-ticket-modal';
 import EditTicketModal from '../components/tickets/edit-ticket-modal';
 import { FaPen, FaTrash } from 'react-icons/fa';
@@ -109,13 +109,13 @@ const Tickets = () => {
     <Container>
       <h1 className='mt-2'>Билеты</h1>
         <Col className='mt-4'>
-          <input type="text" className='px-2 py-1' placeholder="Поиск" value={searchPattern} onChange={handleSearchChange} />
+          <input type='text' className='px-2 py-1' placeholder='Поиск' value={searchPattern} onChange={handleSearchChange} />
         </Col>
         <Col className='mt-2'>
           <Button onClick={handleAddTicket}>Добавить билет</Button>
         </Col>
-        <div className="table-responsive">
-            <Table striped className="mt-4 table-responsive">
+        <div className='table-responsive'>
+            <Table striped className='mt-4 table-responsive'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -129,12 +129,12 @@ const Tickets = () => {
                 <tbody>
                 {tickets.map((ticket) => (
                     <tr key={ticket.id}>
-                        <td className="overflow-cell">{ticket.id}</td>
-                        <td className="overflow-cell" style={{maxWidth: '200px', width: '200px'}}>{ticket.eventId}</td>
-                        <td className="overflow-cell">{ticket.typeName}</td>
-                        <td className="overflow-cell">{ticket.typeDescription}</td>
-                        <td className="overflow-cell">{ticket.price}</td>
-                        <td className="overflow-cell">
+                        <td className='overflow-cell'>{ticket.id}</td>
+                        <td className='overflow-cell' style={{maxWidth: '200px', width: '200px'}}>{ticket.eventId}</td>
+                        <td className='overflow-cell'>{ticket.typeName}</td>
+                        <td className='overflow-cell'>{ticket.typeDescription}</td>
+                        <td className='overflow-cell'>{ticket.price}</td>
+                        <td className='overflow-cell'>
                             <FaPen onClick={() => handleEditTicket(ticket)} className='ms-1 mb-1 me-3' style={{cursor: 'pointer'}}></FaPen>
                             <FaTrash onClick={() => handleDeleteTicket(ticket)} className='mb-1' style={{cursor: 'pointer'}}></FaTrash>
                         </td>
