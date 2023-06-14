@@ -32,16 +32,16 @@ const Index = ({ events, urlSearchPattern, urlPrice, urlDate, urlAmount }) => {
       <Head>
         <title>Louder</title>
 
-        <meta name='title' content='Купить билеты на мероприятия, купить билет на концерт недорого'/>
-        <meta name='description' content='На нашем сайте предоставлен широкий выбор билетов на различные мероприятия,
-          концерты, сходки и митапы по всей России. Моментальное получение, гарантия, удобный поиск, низкие цены.'/>
-        <meta name='keywords' content='билеты, мероприятия, купить, недорого'/>
+        <meta name='title' content='������ ������ �� �����������, ������ ����� �� ������� ��������'/>
+        <meta name='description' content='�� ����� ����� ������������ ������� ����� ������� �� ��������� �����������,
+          ��������, ������ � ������ �� ���� ������. ������������ ���������, ��������, ������� �����, ������ ����.'/>
+        <meta name='keywords' content='������, �����������, ������, ��������'/>
 
-        <meta property='og:title' content='Билеты на мероприятия'/>
-        <meta property='og:description' content='Концерты, сходки и митапы по всей России'/>
+        <meta property='og:title' content='������ �� �����������'/>
+        <meta property='og:description' content='��������, ������ � ������ �� ���� ������'/>
         <meta property='og:url' content='todo'/>
         <meta property='og:type' content='website'/>
-        <meta property='og:keywords' content='мероприятия, билеты, каталог'/>
+        <meta property='og:keywords' content='�����������, ������, �������'/>
       </Head>
       <Information/>
       <EventsFilter
