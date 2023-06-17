@@ -1,20 +1,20 @@
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { useState } from 'react';
-import packageInfo from "../../package.json"; 
+import packageInfo from '../../package.json'; 
 import { getCookie } from 'cookies-next';
 
 const EditUserModal = ({ onClose }) => {
   const [editData, setEditData] = useState({ name: '', email: '',
-     password: '' })
+  password: '' })
   const [editError, setEditError] = useState('');
   const [show, setShow] = useState(true);
+  const domain = packageInfo.domain;
 
   const handleClose = () => {
     setShow(false);
     onClose();
   };
 
-  const domain = packageInfo.domain;
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
@@ -42,42 +42,42 @@ const EditUserModal = ({ onClose }) => {
       };
     } 
     catch {
-      setEditError("Во время изменения произошла ошибка");
+      setEditError('Во время изменения произошла ошибка');
     }
   }
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal size='sm' show={show} onHide={handleClose} as='dialog'>
       <Modal.Header>Изменить пользователя</Modal.Header>
       <Modal.Body className='px-0'>
-        <Form onSubmit={handleEditSubmit} className='p-0'>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Имя"
-              name="name" 
+        <Form onSubmit={handleEditSubmit} className='p-0' as='form'>
+          <Form.Group className='justify-content-center d-flex mb-2' as='p'>
+            <input type='text'
+              className='col-10 px-2 py-1'
+              placeholder='Имя'
+              name='name' 
               value={editData.name}
               onChange={handleEditChange}/>
           </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="email"
-              className="col-7 px-2 py-1"
-              placeholder="Электронная почта"
-              name="email"
+          <Form.Group className='justify-content-center d-flex mb-2' as='p'>
+            <input type='email'
+              className='col-10 px-2 py-1'
+              placeholder='Электронная почта'
+              name='email'
               value={editData.email}
               onChange={handleEditChange}/>
           </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Пароль"
-              name="password" 
+          <Form.Group className='justify-content-center d-flex mb-2' as='p'>
+            <input type='text'
+              className='col-10 px-2 py-1'
+              placeholder='Пароль'
+              name='password' 
               value={editData.password}
               onChange={handleEditChange}/>
           </Form.Group>
-            {editError && <Alert className="text-center" variant="danger">{editError}</Alert>}
-          <Form.Group className='justify-content-center d-flex mt-3'>
-            <Button type="submit">Изменить</Button>
+            {editError && <Alert className='text-center' variant='danger'>{editError}</Alert>}
+          <Form.Group className='justify-content-center d-flex mt-3' as='p'>
+            <Button className='button-fr' type='submit'>Изменить</Button>
           </Form.Group>
         </Form>
       </Modal.Body>

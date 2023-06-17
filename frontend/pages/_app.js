@@ -1,10 +1,12 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/global.css";
-import { useEffect, useState } from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import jwt_decode from "jwt-decode";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/global.css';
+import { useEffect, useState } from 'react';
+import Header from '../components/header';
+import Footer from '../components/footer';
+import jwt_decode from 'jwt-decode';
 import { getCookie, deleteCookie } from 'cookies-next';
+import Head from 'next/head';
+import { SSRProvider } from 'react-bootstrap';
 
 function MyApp({ Component, pageProps }) {
   const [jwt, setJWT] = useState('');
@@ -31,16 +33,27 @@ function MyApp({ Component, pageProps }) {
   }, [jwt]);
   
   useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js");
+    require('bootstrap/dist/js/bootstrap.bundle.min.js');
   }, []);
   
-  return <>
+  return <SSRProvider>
+    <Head>
+      <meta name='Copyright' content='ООО «Быстрые отчеты»'/>
+      <meta name='Address' content='г. Ростов-на-Дону, Россия, 344082, ул.Обороны 24, офис 311'/>
+      <meta httpEquiv='Content-type' content='text/html;charset=windows-1251'/>
+      <meta httpEquiv='Content-Language' content='ru'/>
+      <meta name='robots' content='all'/>
+      <meta property='og:image' content='/meta.png' />
+      <link rel="icon" type="image/x-icon" href='/favicon.ico'></link>
+      <meta property='og:image:alt' content='Быстрые отчеты Louder' />
+      <meta property='og:site_name' content='Louder'/>
+    </Head>
     <Header isLoggedIn={isLoggedIn}/>
-      <div className="background-color-primary no-ws">
+      <main className='background-color-primary no-ws'>
         <Component {...pageProps}/>
-      </div>
+      </main>
     <Footer/>
-</>
+  </SSRProvider>
 }
 
 export default MyApp;

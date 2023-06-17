@@ -5,15 +5,41 @@
     white-space: nowrap;
   }
 
-body{
+body {
   background-color: #d8d8d8;
 }
 
-button{
+button {
   background-color: #FF4938 !important;
   border: 0px !important;
 }
 
-button:hover{
+button:hover {
   background-color: #FF6052 !important;
+}
+
+input {
+  padding-left: 0.5rem;
+  padding-right: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border: 1px solid black !important;
+  border-radius: 0px !important;
+}
+
+input:active, input:focus {
+  outline: none;
+  box-shadow: 0 0 0 0 rgba(0,123,255,0)!important;
+}
+
+section button {
+  width: 200px;
+}
+
+section input {
+  width: 200px;
+}
+
+#login_button {
+  width: inherit !important;
 }

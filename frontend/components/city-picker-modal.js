@@ -1,18 +1,18 @@
 import { setCookie } from 'cookies-next';
 import { useState } from 'react';
-import { Modal, FormControl, ListGroup } from 'react-bootstrap';
+import { Modal, ListGroup } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
 const CityPicker = ({ onClose }) => {
-  const [searchValue, setSearchValue] = useState('');
   const cities = ['Москва', 'Санкт-Петербург', 'Ростов-на-Дону'];
   const router = useRouter();
+  const [searchValue, setSearchValue] = useState('');
   const filteredCities = cities.filter((city) =>
     city.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleSelectCity = (city) => {
-    setCookie('selectedCity', city)
+    setCookie('selectedCity', city);
     onClose();
     router.reload();
   };
@@ -22,21 +22,21 @@ const CityPicker = ({ onClose }) => {
   };
 
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal show={true} onHide={onClose} as='dialog'>
       <Modal.Header>
-        <Modal.Title>Выбор города</Modal.Title>
+        <Modal.Title as='h4'>Выбор города</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FormControl
-          type="text"
-          placeholder="Поиск"
+        <input
+          type='text'
+          placeholder='Поиск'
           value={searchValue}
           onChange={handleSearchChange}
           className='mb-3'
         />
-        <ListGroup className="cities">
+        <ListGroup className='cities' as='ul'>
             {filteredCities.map((city) => (
-                <ListGroup.Item key={city} onClick={() => handleSelectCity(city)}>
+                <ListGroup.Item key={city} onClick={() => handleSelectCity(city)} as='li'>
                 {city}
                 </ListGroup.Item>
             ))}

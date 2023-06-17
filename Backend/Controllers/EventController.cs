@@ -22,6 +22,7 @@ namespace Backend.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> UpdateEventCover([FromRoute] int id, IFormFile cover)
         {
             var currentUser = GetCurrentUser();
@@ -66,6 +67,8 @@ namespace Backend.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
             var currentUser = GetCurrentUser();
@@ -94,6 +97,7 @@ namespace Backend.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> DeleteEvent([FromRoute] int id)
         {
             var currentUser = GetCurrentUser();
@@ -134,6 +138,7 @@ namespace Backend.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> UpdateEvent([FromRoute] int id, EventUpdate eventUpdate)
         {
             var currentUser = GetCurrentUser();

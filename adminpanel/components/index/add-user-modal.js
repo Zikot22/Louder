@@ -1,6 +1,6 @@
-import { Button, Alert, Form, Modal } from 'react-bootstrap';
+import { Button, Alert, Form, Modal, Container } from 'react-bootstrap';
 import { useState } from 'react';
-import packageInfo from "../../package.json"; 
+import packageInfo from '../../package.json'; 
 import { getCookie } from 'cookies-next';
 
 const AddUserModal = ( { onClose } ) => {
@@ -37,7 +37,7 @@ const AddUserModal = ( { onClose } ) => {
       if(response.ok) { handleClose() }
       else {
         var answer = await response.json();
-        setCreationError(answer.error)
+        setCreationError(answer.error ?? 'Ошибка валидации')
       };
     } 
     catch (error) {
@@ -56,47 +56,41 @@ const AddUserModal = ( { onClose } ) => {
     <Modal show={show} onHide={handleClose}>
       <Modal.Header>Создать пользователя</Modal.Header>
       <Modal.Body className='px-0'>
-        <Form onSubmit={handleCreationSubmit} className='p-0'>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Имя"
-              name="name" 
-              value={creationData.name}
-              onChange={handleCreationChange}
-              required/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="email"
-              className="col-7 px-2 py-1"
-              placeholder="Электронная почта"
-              name="email" 
-              value={creationData.email}
-              onChange={handleCreationChange}
-              required/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type="text"
-              className="col-7 px-2 py-1"
-              placeholder="Пароль"
-              name="password" 
-              value={creationData.password}
-              onChange={handleCreationChange}
-              required/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <Form.Check>
-              <input type="checkbox"
-                className='me-2'
-                onChange={handleCheckbox}/>
-              Админ права
-            </Form.Check>
-          </Form.Group>
-            {creationError && <Alert className="text-center" variant="danger">{creationError}</Alert>}
-          <Form.Group className='justify-content-center d-flex mt-3'>
-            <Button type="submit">Создать</Button>
-          </Form.Group>
-        </Form>
+        <Container className='d-flex align-items-center justify-content-center text-center'>
+          <Form onSubmit={handleCreationSubmit} className='p-0 col-8' as='form'>
+            <Form.Group as='fieldset'>
+              <Form.Control type='text'
+                className='mb-2'
+                placeholder='Имя'
+                name='name' 
+                value={creationData.name}
+                onChange={handleCreationChange}
+                required/>
+              <Form.Control type='email'
+                className='mb-2'
+                placeholder='Электронная почта'
+                name='email' 
+                value={creationData.email}
+                onChange={handleCreationChange}
+                required/>
+              <Form.Control type='text'
+                className='mb-2'
+                placeholder='Пароль'
+                name='password' 
+                value={creationData.password}
+                onChange={handleCreationChange}
+                required/>
+              <Form.Check className='mb-3'>
+                <input type='checkbox'
+                  className='me-2'
+                  onChange={handleCheckbox}/>
+                Админ права
+              </Form.Check>
+            </Form.Group>
+            <Button type='submit'>Создать</Button>
+          </Form>
+        </Container>
+        {creationError && <Alert className='text-center mt-3' variant='danger'>{creationError}</Alert>}
       </Modal.Body>
     </Modal>
   );

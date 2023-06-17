@@ -10,9 +10,9 @@ const ErrorMessage = ({ error, onClose }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+    <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
       <Modal.Header closeButton>
-        <Modal.Title>Ошибка</Modal.Title>
+        <Modal.Title as='h4'>Ошибка</Modal.Title>
       </Modal.Header>
       <Modal.Body>{error}</Modal.Body>
       <Modal.Footer>
