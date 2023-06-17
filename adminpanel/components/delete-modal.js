@@ -10,7 +10,7 @@ const DeleteModal = ({ onClose, onConfirm }) => {
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header>
-        <Modal.Title>Вы уверены?</Modal.Title>
+        <Modal.Title as='h4'>Вы уверены?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>Удаление - необратимый процесс</p>

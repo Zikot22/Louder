@@ -28,6 +28,8 @@ namespace Backend.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> UpdateUserAvatar([FromRoute] int id, IFormFile avatar)
         {
             var currentUser = GetCurrentUser();
@@ -104,6 +106,7 @@ namespace Backend.Controllers
 
         [HttpPut]
         [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         public async Task<ActionResult> CreateUser(User user)
@@ -125,8 +128,10 @@ namespace Backend.Controllers
 
         [HttpPost("admin/{id}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> UpdateUserAdmin([FromRoute] int id, UserAdminUpdate userUpdate)
         {
             var currentUser = GetCurrentUser();
@@ -151,8 +156,10 @@ namespace Backend.Controllers
 
         [HttpPost("{id}")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> UpdateUser([FromRoute] int id, UserUpdate userUpdate)
         {
             var currentUser = GetCurrentUser();
@@ -208,6 +215,8 @@ namespace Backend.Controllers
         [HttpGet("{id}/username")]
         [IgnoreAntiforgeryToken]
         [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<string>> GetUsername([FromRoute] int id)
         {

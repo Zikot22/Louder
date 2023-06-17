@@ -20,9 +20,9 @@
     color: rgb(50, 53, 231);
 }
 
-@media (max-width: 575px) { /* Mobile devices */
+@media (max-width: 575px) {
     .information {
-        padding: 2rem 0;
+        padding: 2rem 0.5rem;
     }
 
     .header_text {
@@ -30,6 +30,6 @@
     }
 
     .text {
-        font-size: 0.85rem;
+        font-size: 0.80rem;
     }
 }

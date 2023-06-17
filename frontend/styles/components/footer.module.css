@@ -1,0 +1,21 @@
+.company {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.social_links {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .company {
+    justify-content: center;
+  }
+
+  .social_links {
+    justify-content: center;
+  }
+}

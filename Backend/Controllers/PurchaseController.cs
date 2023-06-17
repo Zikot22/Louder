@@ -21,6 +21,7 @@ namespace Backend.Controllers
 
         [HttpPost]
         [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         public async Task<ActionResult> AddPurchases(IEnumerable<Purchase> purchases)
@@ -53,6 +54,7 @@ namespace Backend.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<IEnumerable<Purchase>>> GetUserPurchases([FromRoute] int id)
         {
             var currentUser = GetCurrentUser();

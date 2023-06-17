@@ -1,5 +1,4 @@
 import { Container, Navbar } from 'react-bootstrap';
-import LogoIcon from './icons/LogoIcon';
 import { useEffect, useState } from 'react';
 import LoginRegistrationForm from './authorization-modal';
 import { useRouter } from 'next/router';
@@ -7,6 +6,7 @@ import { FaSignInAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import packageInfo from '../package.json';
 import { getCookie, setCookie } from 'cookies-next';
 import CityPicker from './city-picker-modal';
+import Image from 'next/image';
 
 const Header = ({ isLoggedIn }) => {
   const router = useRouter();
@@ -46,7 +46,7 @@ const Header = ({ isLoggedIn }) => {
         <Container>
           <Navbar.Brand className='d-flex align-items-center'>
               <h4 className='brand fw-bold mb-0 text-decoration-none pe-2'>
-                <a className='brand' href='/'><LogoIcon /> LOUDER</a>
+                <a className='brand' href='/'><Image alt="SVG Image" width={32} height={45} src='/logoicon.svg'/> LOUDER</a>
               </h4>
               <button className='city-picker brand' onClick={handleOpenCityPicker}>
                 <FaMapMarkerAlt className='mb-1' />{selectedCity}
@@ -57,8 +57,8 @@ const Header = ({ isLoggedIn }) => {
             <Navbar.Text style={{ cursor: 'pointer' }} className='py-0'>
               {
                 isLoggedIn
-                  ? <button onClick={() => { router.push('/account') }} className='pe-2 pointer'>
-                    <img id='header-avatar' className='rounded-circle' style={{ width: '40px', height: '40px' }}
+                  ? <button onClick={() => { router.push('/account') }} className='pe-2 pointer' name='profile'>
+                    <img id='header-avatar' className='rounded-circle' alt='avatar' style={{ width: '40px', height: '40px' }}
                       onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = '/no_avatar.jpg'; currentTarget.srcset = '/no_avatar.jpg' }} />
                   </button>
                   : <button className='pe-2' onClick={handleOpenAuthorization}>

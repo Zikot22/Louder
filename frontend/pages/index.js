@@ -16,7 +16,6 @@ const Index = ({ events, urlSearchPattern, urlPrice, urlDate, urlAmount }) => {
 
   const router = useRouter();
   useEffect(() => {
-    console.log(urlSearchPattern);
     const queryParams = new URLSearchParams();
     queryParams.append('searchpattern', searchPattern);
     queryParams.append('price', price);

@@ -1,4 +1,4 @@
-import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import { Modal, Button, Form, Alert, Container } from 'react-bootstrap';
 import { useState } from 'react';
 import packageInfo from '../../package.json'; 
 import { getCookie } from 'cookies-next';
@@ -37,7 +37,7 @@ const EditTicketModal = ({ onClose, selectedTicket }) => {
       if(response.ok) { handleClose() }
       else {
         var answer = await response.json();
-        setEditError(answer.error)
+        setEditError(answer.error  ?? 'Ошибка валидации')
       };
     } 
     catch {
@@ -49,44 +49,38 @@ const EditTicketModal = ({ onClose, selectedTicket }) => {
     <Modal show={show} onHide={handleClose}>
       <Modal.Header>Изменить билет {selectedTicket.typeName}</Modal.Header>
       <Modal.Body className='px-0'>
-        <Form onSubmit={handleEditSubmit} className='p-0'>
-        <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type='text'
-              className='col-7 px-2 py-1'
-              placeholder='Id мероприятия'
-              name='eventId' 
-              value={editData.eventId}
-              onChange={handleEditChange}/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type='text'
-              className='col-7 px-2 py-1'
-              placeholder='Цена'
-              name='price' 
-              value={editData.price}
-              onChange={handleEditChange}/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type='text'
-              className='col-7 px-2 py-1'
-              placeholder='Имя'
-              name='typeName' 
-              value={editData.typeName}
-              onChange={handleEditChange}/>
-          </Form.Group>
-          <Form.Group className='justify-content-center d-flex mb-2'>
-            <input type='text'
-              className='col-7 px-2 py-1'
-              placeholder='Описание'
-              name='typeDescription' 
-              value={editData.typeDescription}
-              onChange={handleEditChange}/>
-          </Form.Group>
-            {editError && <Alert className='text-center' variant='danger'>{editError}</Alert>}
-          <Form.Group className='justify-content-center d-flex mt-3'>
+        <Container className='d-flex align-items-center justify-content-center text-center'>
+          <Form onSubmit={handleEditSubmit} className='p-0 col-8' as='form'>
+            <Form.Group as='fieldset'>
+              <Form.Control type='text'
+                className='mb-2'
+                placeholder='Id мероприятия'
+                name='eventId' 
+                value={editData.eventId}
+                onChange={handleEditChange}/>
+              <Form.Control type='text'
+                className='mb-2'
+                placeholder='Цена'
+                name='price' 
+                value={editData.price}
+                onChange={handleEditChange}/>
+              <Form.Control type='text'
+                className='mb-2'
+                placeholder='Имя'
+                name='typeName' 
+                value={editData.typeName}
+                onChange={handleEditChange}/>
+              <Form.Control type='text'
+                className='mb-3'
+                placeholder='Описание'
+                name='typeDescription' 
+                value={editData.typeDescription}
+                onChange={handleEditChange}/>
+            </Form.Group>
             <Button type='submit'>Изменить</Button>
-          </Form.Group>
-        </Form>
+          </Form>
+        </Container>
+        {editError && <Alert className='text-center' variant='danger'>{editError}</Alert>}
       </Modal.Body>
     </Modal>
   );

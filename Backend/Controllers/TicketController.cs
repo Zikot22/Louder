@@ -84,6 +84,7 @@ namespace Backend.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> UpdateTicket([FromRoute] int id, TicketUpdate ticketUpdate)
         {
             var currentUser = GetCurrentUser();

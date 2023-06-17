@@ -15,7 +15,7 @@ namespace Backend.Models
         [Required, StringLength(100)]
         public string? Name { get; set; }
 
-        [Required, StringLength(16)]
+        [Required, StringLength(16, MinimumLength = 8)]
         public string? Password { get; set; }
 
         public bool AdminPermissions { get; set;}

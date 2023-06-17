@@ -194,9 +194,9 @@ const LoginRegistrationForm = ({onClose})  => {
                   />
               </Form.Group>
               {registrationErrors.password && <Alert className='text-center' variant='danger'>{registrationErrors.password}</Alert>}
-              <Form.Group check className={styles.form_text + ' mb-2'} as='p'>
-                <label check className='col-10'> 
-                  <input type='checkbox' required className='col-1'/>{' '}
+              <Form.Group className={styles.form_text + ' mb-2'} as='p'>
+                <label className='col-10'> 
+                  <input type='checkbox' required className='col-1'/>&nbsp;
                   Я принимаю <a href='#'>соглашение об обработке данных</a>
                 </label>
               </Form.Group>
