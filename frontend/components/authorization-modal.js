@@ -197,7 +197,7 @@ const LoginRegistrationForm = ({onClose})  => {
               <Form.Group className={styles.form_text + ' mb-2'} as='p'>
                 <label className='col-10'> 
                   <input type='checkbox' required className='col-1'/>&nbsp;
-                  Я принимаю <a href='#'>соглашение об обработке данных</a>
+                  Я принимаю <a href='/personaldata'>соглашение о персональных данных</a>
                 </label>
               </Form.Group>
               {registrationErrors.other && <Alert className='text-center' variant='danger'>{registrationErrors.other}</Alert>}
