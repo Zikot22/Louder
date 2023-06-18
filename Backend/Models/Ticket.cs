@@ -21,5 +21,8 @@ namespace Backend.Models
 
         [StringLength(100)]
         public string? TypeDescription { get; set; }
+
+        [StringLength(24)]
+        public string? TemplateId { get; set; }
     }
 }
