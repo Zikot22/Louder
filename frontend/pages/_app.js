@@ -7,6 +7,7 @@ import jwt_decode from 'jwt-decode';
 import { getCookie, deleteCookie } from 'cookies-next';
 import Head from 'next/head';
 import { SSRProvider } from 'react-bootstrap';
+import CookieWarning from '../components/cookie-warning';
 
 function MyApp({ Component, pageProps }) {
   const [jwt, setJWT] = useState('');
@@ -53,6 +54,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps}/>
       </main>
     <Footer/>
+    <CookieWarning/>
   </SSRProvider>
 }
 
