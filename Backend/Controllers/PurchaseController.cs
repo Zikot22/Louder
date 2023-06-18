@@ -75,5 +75,27 @@ namespace Backend.Controllers
             var result = await rep.GetUserPurchasesAsync(id, searchPattern);
             return Ok(result);
         }
+
+        [HttpGet("{id}/download")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<string>> Download([FromRoute] int id)
+        {
+            var purchase = await rep.GetPurchaseAsync(id);
+            if (purchase == null) return NotFound(new { error = "Покупка не найдена" });
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+            if (currentUser.Id != purchase.UserId)
+            {
+                return Forbid();
+            }
+            var result = await rep.DownloadAsync(id);
+            return Ok(result);
+        }
     }
 }
