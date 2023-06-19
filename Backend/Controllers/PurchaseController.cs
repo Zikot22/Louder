@@ -31,14 +31,18 @@ namespace Backend.Controllers
             {
                 return Unauthorized();
             }
-            if (!currentUser.AdminPermissions)
+            if(purchases.Count() == 0) 
             {
-                return Forbid();
+                return BadRequest(new { error = "Выберите билеты" });
             }
             try 
             {
                 foreach(var purchase in purchases)
                 {
+                    if (currentUser.Id != purchase.UserId)
+                    {
+                        return Forbid();
+                    }
                     await eventRep.DecreaseAmountAsync(purchase.TicketId, purchase.Count);
                 }
             }
@@ -76,7 +80,7 @@ namespace Backend.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}/download")]
+        [HttpPost("{id}/download")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]

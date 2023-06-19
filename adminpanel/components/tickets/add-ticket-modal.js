@@ -4,7 +4,7 @@ import packageInfo from '../../package.json';
 import { getCookie } from 'cookies-next';
 
 const AddTicketModal = ( { onClose } ) => {
-  const [creationData, setCreationData] = useState({ eventId: '', price: '', typeName: '', typeDescription: '' })
+  const [creationData, setCreationData] = useState({ eventId: '', price: '', typeName: '', typeDescription: '', templateId: '' })
   const [creationError, setCreationError] = useState('');
   const [show, setShow] = useState(true);
 
@@ -78,6 +78,12 @@ const AddTicketModal = ( { onClose } ) => {
                 placeholder='Описание'
                 name='typeDescription' 
                 value={creationData.typeDescription}
+                onChange={handleCreationChange}/>
+              <Form.Control type='text'
+                className='mb-3'
+                placeholder='Шаблон'
+                name='templateId' 
+                value={creationData.templateId}
                 onChange={handleCreationChange}/>
             </Form.Group>
             <Button type='submit'>Создать</Button>

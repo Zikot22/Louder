@@ -126,10 +126,11 @@ const Tickets = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>ID мероприятия</th>
+            <th>Мероприятие</th>
             <th>Имя</th>
             <th>Описание</th>
             <th>Цена</th>
+            <th>Шаблон</th>
             <th>Действия</th>
           </tr>
         </thead>
@@ -141,6 +142,7 @@ const Tickets = () => {
               <td className='overflow-cell'>{ticket.typeName}</td>
               <td className='overflow-cell'>{ticket.typeDescription}</td>
               <td className='overflow-cell'>{ticket.price}</td>
+              <td className='overflow-cell'>{ticket.templateId}</td>
               <td className='overflow-cell'>
                 <FaPen onClick={() => handleEditTicket(ticket)} className='ms-1 mb-1 me-3' style={{cursor: 'pointer'}}></FaPen>
                 <FaTrash onClick={() => handleDeleteTicket(ticket)} className='mb-1' style={{cursor: 'pointer'}}></FaTrash>

@@ -5,7 +5,7 @@ import { getCookie } from 'cookies-next';
 
 const EditTicketModal = ({ onClose, selectedTicket }) => {
   const domain = packageInfo.domain;
-  const [editData, setEditData] = useState({ eventId: selectedTicket.eventId, price: selectedTicket.price, typeName: '', typeDescription: '' })
+  const [editData, setEditData] = useState({ eventId: selectedTicket.eventId, price: selectedTicket.price, typeName: '', typeDescription: '', templateId: '' })
   const [editError, setEditError] = useState('');
   const [show, setShow] = useState(true);
 
@@ -75,6 +75,12 @@ const EditTicketModal = ({ onClose, selectedTicket }) => {
                 placeholder='Описание'
                 name='typeDescription' 
                 value={editData.typeDescription}
+                onChange={handleEditChange}/>
+              <Form.Control type='text'
+                className='mb-3'
+                placeholder='Шаблон'
+                name='templateId' 
+                value={editData.templateId}
                 onChange={handleEditChange}/>
             </Form.Group>
             <Button type='submit'>Изменить</Button>

@@ -66,6 +66,10 @@ namespace Backend.Repositories
             {
                 updatingTicket.EventId = ticketUpdate.EventId;
             }
+            if (!string.IsNullOrWhiteSpace(ticketUpdate.TemplateId))
+            {
+                updatingTicket.TemplateId = ticketUpdate.TemplateId;
+            }
             context.SaveChanges();
         }
     }

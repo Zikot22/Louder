@@ -11,12 +11,12 @@ const Purchases = ({purchases}) => {
 
   const handleDownload = async (purchase) => {
     const response = await fetch(`${domain}/Purchase/${purchase.id}/download`, {
+      method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + getCookie('token'),
       },
     });
     var link = await response.text();
-    console.log(link); 
     setDownload(link);
   };
 

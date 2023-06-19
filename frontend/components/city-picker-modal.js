@@ -4,7 +4,7 @@ import { Modal, ListGroup } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
 const CityPicker = ({ onClose }) => {
-  const cities = ['Москва', 'Санкт-Петербург', 'Ростов-на-Дону'];
+  const cities = ['Москва', 'Санкт-Петербург', 'Ростов-на-Дону', 'Новосибирск'];
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const filteredCities = cities.filter((city) =>
@@ -35,11 +35,11 @@ const CityPicker = ({ onClose }) => {
           className='mb-3'
         />
         <ListGroup className='cities' as='ul'>
-            {filteredCities.map((city) => (
-                <ListGroup.Item key={city} onClick={() => handleSelectCity(city)} as='li'>
-                {city}
-                </ListGroup.Item>
-            ))}
+          {filteredCities.map((city) => (
+            <ListGroup.Item key={city} onClick={() => handleSelectCity(city)} as='li'>
+            {city}
+            </ListGroup.Item>
+          ))}
         </ListGroup>
       </Modal.Body>
     </Modal>
