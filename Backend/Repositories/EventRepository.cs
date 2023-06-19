@@ -17,37 +17,50 @@ namespace Backend.Repositories
 
         public async Task<IEnumerable<Event>> GetEventsWithFilterAsync(string searchPattern, string price, string date, string amount, string city)
         {
-            IQueryable<Event> query = context.Events;
+            var query = from e in context.Events
+                        join t in context.Tickets on e.Id equals t.EventId
+                        group t by e into g
+                        select new
+                        {
+                            Event = g.Key,
+                            MinPrice = g.Min(t => t.Price)
+                        };
             if (!string.IsNullOrEmpty(city)) 
             {
-                query = query.Where(e => e.City == city);
+                query = query.Where(e => e.Event.City == city);
             }
             if (!string.IsNullOrWhiteSpace(searchPattern))
             {
-                query = query.Where(e => EF.Functions.Like(e.Name!, $"%{searchPattern}%"));
+                query = query.Where(e => EF.Functions.Like(e.Event.Name!, $"%{searchPattern}%"));
             }
             switch (price) 
             {
+                case "asc":
+                    query = query.OrderBy(e => e.MinPrice);
+                    break;
+                case "desc":
+                    query = query.OrderByDescending(e => e.MinPrice);
+                    break;
             }
             switch (date) 
             {
                 case "asc":
-                    query = query.OrderBy(e => e.DateTime);
+                    query = query.OrderBy(e => e.Event.DateTime);
                     break;
                 case "desc":
-                    query = query.OrderByDescending(e => e.DateTime);
+                    query = query.OrderByDescending(e => e.Event.DateTime);
                     break;
             }
             switch (amount)
             {
                 case "asc":
-                    query = query.OrderBy(e => e.Amount);
+                    query = query.OrderBy(e => e.Event.Amount);
                     break;
                 case "desc":
-                    query = query.OrderByDescending(e => e.Amount);
+                    query = query.OrderByDescending(e => e.Event.Amount);
                     break;
             }
-            return await query.ToListAsync();
+            return await query.Select(e => e.Event).ToListAsync();
         }
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync(string searchPattern)

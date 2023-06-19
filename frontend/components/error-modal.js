@@ -16,7 +16,7 @@ const ErrorMessage = ({ error, onClose }) => {
       </Modal.Header>
       <Modal.Body>{error}</Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleClose}>
+        <Button className='button-fr' onClick={handleClose}>
           OK
         </Button>
       </Modal.Footer>

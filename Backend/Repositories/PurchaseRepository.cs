@@ -70,6 +70,7 @@ namespace Backend.Repositories
                 var reportParams = new Dictionary<string, string>()
                 {
                     { "Id", uniqueId },
+                    { "Name", purchase.Ticket!.Event!.Name! },
                     { "City", purchase.Ticket!.Event!.City! },
                     { "Adress", purchase.Ticket.Event.Adress! },
                     { "DateTime", purchase.Ticket.Event.DateTime.ToString() },
